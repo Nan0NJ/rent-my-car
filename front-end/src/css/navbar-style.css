@@ -1,6 +1,12 @@
 /* 
     CSS file for NAVIGATION BAR
 */
+/* Adding a font dependency */
+@import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
+:root {
+    --font-sansita-one: 'Sansita One', sans-serif;
+}
+  
 .navbar-items {
     display: flex;
     justify-content: space-between;
@@ -35,6 +41,7 @@
     cursor: pointer;
     padding: 0;
     text-decoration: none;
+    font-family: var(--font-sansita-one);
 }
 
 a:link, a:visited, a:hover, a:active {

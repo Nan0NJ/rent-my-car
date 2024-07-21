@@ -9,6 +9,7 @@ import Services from './main_components/Pages/OurServces';
 import Contact from './main_components/Pages/ContactUs';
 import Booking from './main_components/Pages/Bookings';
 import Dashboard from './main_components/Pages/MyDashboard';
+import Footer from './main_components/FooterBar/Footer';
 export default function App() {
   return (
     <Router>
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           {/* Add other routes */}
         </Routes>
+        <Footer />
       </div>
     </Router>
   );
