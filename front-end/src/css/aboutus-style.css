@@ -1,0 +1,122 @@
+.about-us-container {
+    padding: 20px;
+    color: #333;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.about-header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color:#02775a;
+}
+
+.about-header p {
+    font-size: 18px;
+    font-weight: 700;
+    font-style: italic;
+    color: #27db9f;
+}
+
+h5 {
+    color: #02775a;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.about-text p {
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 30px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-image: linear-gradient(to right, #02775a, #27db9f);
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: 0.3s ease;
+}
+
+.button:hover {
+    background-image: linear-gradient(to right, #27db9f, #02775a);
+}
+
+.fun-facts {
+    background-color: #bfefdf;
+    color:#ffffff;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.fun-facts h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #02775a;
+}
+
+.fact {
+    background-color: #6dd2ba;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    padding: 20px;
+    display: inline-block;
+    width: calc(33.33% - 40px);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s ease both;
+    transition: background-color 0.3s ease; 
+}
+
+.fact:hover {
+    background-color: #24c361;
+    transform: translateY(0);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fact h3 {
+    font-size: 22px;
+    color: #02775a;
+   
+}
+
+.additional-info {
+    background-color: #6dd2ba;
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    animation: fadeIn 1s ease;
+}
+
+.additional-info h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.about-text {
+    text-align: center;
+    margin-bottom: 2em;
+}
