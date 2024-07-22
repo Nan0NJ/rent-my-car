@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
+
+:root {
+  --font-sansita-one: 'Sansita One', sans-serif;
+}
+
+.services-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.service-card, .service-image {
+  flex: 1 1 45%;
+  max-width: 45%;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  margin: 10px;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #058865;
+  max-width: 500px;
+}
+
+.service-title {
+  font-size: 1.7rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-family: var(--font-sansita-one);
+}
+
+.service-text {
+  font-size: 1.5rem;
+  color: #EBEBEB;
+  margin-bottom: 20px;
+}
+
+.service-link {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #EBEBEB;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  width: 200px;
+}
+
+.service-link span {
+  margin-left: 5px;
+  font-size: 2rem;
+  color: #EBEBEB;
+}
+
+.service-link::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: #EBEBEB;
+  margin-top: 5px;
+  transition: width 0.3s ease;
+}
+
+.service-link:hover::after {
+  width: 100%;
+}
+
+.service-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .service-card, .service-image {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}
