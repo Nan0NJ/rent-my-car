@@ -42,7 +42,7 @@ const Navbar = () => {
               </HashLink>
             ) : (
               <Link
-                key={item.id} // Use a unique attribute from your data as the key
+                key={item.id} 
                 to={item.url}
                 className={item.cName}
                 onClick={toggleMobileMenu}

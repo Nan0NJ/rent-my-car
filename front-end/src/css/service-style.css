@@ -1,3 +1,6 @@
+/*
+  CSS for the services section
+*/
 @import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
 
 :root {
@@ -10,6 +13,14 @@
   justify-content: center;
   gap: 20px;
   padding: 20px;
+}
+.titleSer {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+  font-family: var(--font-sansita-one);
+  text-align: center;
+  align-items: center;
 }
 
 .service-card, .service-image {
@@ -80,6 +91,7 @@
   border-radius: 8px;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .service-card, .service-image {
     flex: 1 1 100%;

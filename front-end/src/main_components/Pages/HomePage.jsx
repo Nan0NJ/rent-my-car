@@ -3,6 +3,8 @@ import React, {useEffect}from 'react';
 // Importing the files
 import Banner from '../landing_page_components/Banner';
 import Serviced from '../landing_page_components/Serviced';
+import Categories from '../landing_page_components/Categories';
+import TopMark from '../landing_page_components/TopMark';
 
 const Home = () => {
     useEffect(() => {
@@ -11,6 +13,8 @@ const Home = () => {
     return (
         <div>
             <Banner />
+            <Categories />
+            <TopMark />
             <Serviced />
         </div>
     );

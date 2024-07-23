@@ -1,6 +1,6 @@
 import React from 'react';
-import './../../css/footer-style.css'; // Make sure to create this CSS file
-import CarImage from './../../imgs/footer_car.png'; // Adjust the path to your image
+import './../../css/footer-style.css';
+import CarImage from './../../imgs/footer_car.png';
 
 const Footer = () => {
     return (

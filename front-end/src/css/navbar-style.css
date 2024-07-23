@@ -22,7 +22,7 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.7); /* Use rgba with an alpha value */
+    background-color: rgba(255, 255, 255, 0.7);
     margin-left: 0;
 }
 
@@ -53,7 +53,7 @@ span {
 }
 
 .header-logo {
-    width: 100px; /* Set a default width */
+    width: 100px;
     height: auto; /* Maintain aspect ratio */
 }
 
@@ -108,7 +108,7 @@ span {
     display: block;
 }
 
-/* Media query for smaller screens */
+/* Responsive adjustments */
 @media screen and (max-width: 768px) {
     .navbar-items {
         flex-direction: row;

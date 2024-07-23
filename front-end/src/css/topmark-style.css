@@ -1,0 +1,90 @@
+/*
+    CSS for the TopMark
+*/
+/* Adding a font dependency */
+@import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
+
+:root {
+    --font-sansita-one: 'Sansita One', sans-serif;
+}
+
+.top-categories {
+    text-align: center;
+    padding: 20px;
+}
+
+.titleTop {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+    font-family: var(--font-sansita-one);
+}
+
+.subtitleTop {
+    font-size: 18px;
+    color: #666;
+    font-weight: bold;
+    margin: 10px 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.lineBelowSubtitleTop{
+  width: 50%;
+  margin: 0 auto 20px auto;
+  border: none;
+  border-top: 2px solid #8a8989;
+}
+
+.background-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px; 
+    margin: 0 auto;
+}
+
+.background-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.overlay-titleTop {
+    font-size: 32px;
+    color: #fff;
+    padding-bottom: 10%;
+    font-family: var(--font-sansita-one);
+}
+
+.overlay-button {
+    font-size: 20px;
+    color: #fff;
+    background-color: transparent;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20px;
+}
+
+.overlay-button:hover {
+    box-shadow: 0 0 10px 0 #fff;
+    text-shadow: #fff 0 0 10px;
+}

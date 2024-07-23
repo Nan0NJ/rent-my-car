@@ -1,24 +1,31 @@
+/*
+    CSS for the BANNER
+*/
+@import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
+:root {
+    --font-sansita-one: 'Sansita One', sans-serif;
+}
+
 .hero-image {
-    height: calc(110vh - 350px); /* Adjust the height based on viewport height (minus navbar height) */
+    height: calc(110vh - 350px); /* Height based on viewport height (minus navbar height) */
     background-image: url("../imgs/Banner.png");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain; /* Change from cover to contain */
+    background-size: contain; 
     position: relative;
     border-radius: 4px;
-    z-index: -1; /* Set a negative z-index to position the banner behind the content */
+    z-index: -1; 
     background-color: #058865;
 }
-/* FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX LATER  */
-/* .hero-text {
+
+.hero-text {
     text-align: center;
     position: absolute;
-    top: 50%;
+    top: 85%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: #FFFFFF;
+    text-shadow: 4px 1px 4px #000000;
+    font-family: var(--font-sansita-one);
+    font-size: 1.2rem;
 }
-
-.hero-text h1 {
-    color: white;
-} */

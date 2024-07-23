@@ -1,0 +1,73 @@
+/*
+    CSS for the Categories page.
+*/
+.button-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    flex-wrap: wrap; /* Wrapping to support smaller screens */
+}
+
+.button-linkCar {
+    text-decoration: none;
+}
+
+.buttonCar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    width: 120px;
+    height: 100px;
+    box-sizing: border-box;
+}
+
+.buttonCar:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-imageCar {
+    width: 80%;
+    height: auto;
+    margin-bottom: 8px;
+}
+
+.button-labelCar {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .buttonCar {
+        width: 100px; 
+        height: 100px; 
+    }
+
+    .button-labelCar {
+        font-size: 12px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .buttonCar {
+        width: 80px; 
+        height: 110px; 
+    }
+
+    .button-labelCar {
+        font-size: 10px; 
+    }
+}

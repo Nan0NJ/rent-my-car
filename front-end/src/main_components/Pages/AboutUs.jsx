@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
-// Import
+// Import files
 import "./../../css/aboutus-style.css";
 
 function About() {

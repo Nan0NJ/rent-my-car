@@ -6,6 +6,8 @@ import Image2 from './../../imgs/image2.png';
 
 const Serviced = () => {
   return (
+    <div>
+    <h1 className="titleSer">Our Services</h1>
     <div className="services-container">
       <div className="service-card">
         <h3 className="service-title">All Brands</h3>
@@ -31,6 +33,7 @@ const Serviced = () => {
           Learn More <span>&rarr;</span>
         </a>
       </div>
+    </div>
     </div>
   );
 };

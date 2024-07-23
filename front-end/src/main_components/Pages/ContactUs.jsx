@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import './../../css/contactus-style.css'; 
 import Email from './../../imgs/email.png';
@@ -7,6 +7,9 @@ import Location from './../../imgs/location.png';
 import Shape from './../../imgs/shape.png';
 
 const Contact = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
+  }, []);
   return (
     <div className="container">
       <span className="big-circle"></span>
