@@ -1,0 +1,118 @@
+/*
+    CSS for the Authentication page
+*/
+.authentication-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+
+.login-signup {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+  
+.login-signup button {
+    background-image: linear-gradient(to right, #02775a, #27db9f);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+  
+.login-signup button:hover {
+    background-image: linear-gradient(to right, #27db9f, #02775a);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); 
+    z-index: 2; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.formLOGIN {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative; 
+    text-align: center;
+    width: 100%; 
+    max-width: 400px; 
+}
+  
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #02775a; 
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.formLOGIN input {
+  width: 85%;
+  padding: 10px;
+  margin-bottom: 15px; 
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.formLOGIN input::placeholder {
+  text-align: center; 
+}
+
+.formLOGIN button[type="submit"] {
+  background-color: #02775a;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.formLOGIN button[type="submit"]:hover {
+  background-color: #066952; 
+}
+
+.sign-out {
+  background-color: #02775a;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.show-password-button {
+  background-color: #E8F0FE;
+  margin-left: -1.9em;
+  border: none;
+  padding: 3px;
+  padding-top: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
