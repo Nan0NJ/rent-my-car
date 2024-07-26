@@ -1,0 +1,57 @@
+/*
+    CSS file for CAR DETAILS
+*/
+@import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
+:root {
+    --font-sansita-one: 'Sansita One', sans-serif;
+}
+
+.car-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.car-img {
+    width: 300px;
+    height: 300px;
+}
+
+.car-title-detail {
+    font-family: var(--font-sansita-one);
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+
+.car-detail-text {
+    font-family: var(--font-sansita-one);
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+.car-detail-status {
+    font-family: var(--font-sansita-one);
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    opacity: 0.7;
+}
+  
+.rent-button, .back-button {
+    gap: 20px;
+    margin-top: 10px;
+    background-image: linear-gradient(to right, #02775a, #27db9f);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+  
+.rent-button:hover {
+    background-image: linear-gradient(to right, #27db9f, #02775a);
+}
+
+.back-button:hover {
+    background-image: linear-gradient(to right, #27db9f, #02775a);
+}

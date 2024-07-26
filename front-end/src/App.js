@@ -7,7 +7,8 @@ import Home from './main_components/Pages/HomePage';
 import About from './main_components/Pages/AboutUs';
 import Services from './main_components/Pages/OurServces'; 
 import Contact from './main_components/Pages/ContactUs';
-import Booking from './main_components/Pages/Bookings';
+import Booking from './main_components/booking_page_components/Bookings';
+import CarDetails from './main_components/booking_page_components/CarDetails';
 import Dashboard from './main_components/Pages/MyDashboard';
 import Footer from './main_components/FooterBar/Footer';
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/car/:id" element={<CarDetails />} />
           {/* Add other routes */}
         </Routes>
         <Footer />

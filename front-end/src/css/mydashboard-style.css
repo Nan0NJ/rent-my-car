@@ -1,0 +1,29 @@
+.dashboard {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .account-info, .rented-cars, .rent-history, .add-rented-car {
+    margin-bottom: 20px;
+  }
+  
+  .car-item {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .car-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .car-info {
+    flex-grow: 1;
+  }
+  

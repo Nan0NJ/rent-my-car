@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 
-// Importing files
+// Importing CSS
 import './../../css/booking-style.css';
+import Cars from './CarItems';
+import TEST from './../../imgs/footer_car.png';
 
 // Helper function to get query parameters
 const useQuery = () => {
@@ -20,6 +22,7 @@ const BookingPage = () => {
     modelYear: '',
   });
   const [showFilters, setShowFilters] = useState(false);
+  const [cars, setCars] = useState([]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -30,11 +33,26 @@ const BookingPage = () => {
     setSearchTerm(event.target.value);
   };
 
+  const filterCars = useCallback(() => {
+    // Simulate fetching data from an API
+    const fetchedCars = Cars;
+
+    const filteredCars = fetchedCars.filter((car) => {
+      return (
+        car.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (!filters.category || car.category === filters.category) &&
+        car.price >= filters.minPrice &&
+        car.price <= filters.maxPrice &&
+        (!filters.modelYear || car.modelYear.toString() === filters.modelYear)
+      );
+    });
+
+    setCars(filteredCars);
+  }, [filters, searchTerm]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Implement search logic here using searchTerm and filters
-    console.log('Search Term:', searchTerm);
-    console.log('Filters:', filters);
+    filterCars();
   };
 
   const toggleFilters = () => {
@@ -45,6 +63,15 @@ const BookingPage = () => {
     const { name, value } = event.target;
     setFilters({ ...filters, [name]: Number(value) });
   };
+
+  useEffect(() => {
+    filterCars();
+  }, [filters, searchTerm, filterCars]);
+
+  useEffect(() => {
+    // Run filterCars initially to load cars based on initial filters
+    filterCars();
+  }, [filterCars]);
 
   return (
     <div className="booking-page">
@@ -85,9 +112,9 @@ const BookingPage = () => {
             >
               <option value="">Select Category</option>
               <option value="sedan">Sedan</option>
-              <option value="suv">SUV</option>
               <option value="cabriolet">Cabriolet</option>
               <option value="coupe">Coupe</option>
+              <option value="suv">SUV</option>
               <option value="micro">Micro</option>
             </select>
             <div className="price-filter">
@@ -125,6 +152,38 @@ const BookingPage = () => {
           </div>
         )}
       </form>
+
+      <div className="car-results">
+        {cars.length > 0 ? (
+          cars.map((car) => (
+            car.taken ? (
+              <div key={car.id} className={`car-item ${car.taken ? 'car-taken' : ''}`}>
+                <img src={TEST} alt={car.name} className="car-img" />
+                <div className="car-info">
+                  <h3>{car.name}</h3>
+                  <p>Category: {car.category}</p>
+                  <p>Price: {car.price} €</p>
+                  <p>Model Year: {car.modelYear}</p>
+                  <p>Status: {car.taken ? 'Taken' : 'Available'}</p>
+                </div>
+              </div>
+            ) : (
+              <Link to={`/car/${car.id}`} key={car.id} className={`car-item ${car.taken ? 'car-taken' : ''}`}>
+                <img src={TEST} alt={car.name} className="car-img" />
+                <div className="car-info">
+                  <h3>{car.name}</h3>
+                  <p>Category: {car.category}</p>
+                  <p>Price: {car.price} €</p>
+                  <p>Model Year: {car.modelYear}</p>
+                  <p>Status: {car.taken ? 'Taken' : 'Available'}</p>
+                </div>
+              </Link>
+            )
+          ))
+        ) : (
+          <p>No cars found</p>
+        )}
+      </div>
     </div>
   );
 };
