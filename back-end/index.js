@@ -23,8 +23,10 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const cars = require('./routes/cars');
+const users = require('./routes/users');
 
 app.use('/cars', cars);
+app.use('/users', users);
 
 app.get('/', (req, res) => {
   res.send('Rent My Car API');

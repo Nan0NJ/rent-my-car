@@ -40,4 +40,30 @@ dataPool.getCarById = (id) => {
     });
 };
 
+// dataPool.addCar = (car) => { LATER ON
+
+// Authenticate user
+dataPool.AuthUser = (email) => {
+    return new Promise((resolve, reject) => {
+        conn.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+// Add user
+dataPool.AddUser = (email, password, age) => {
+    return new Promise((resolve, reject) => {
+        conn.query('INSERT INTO users (email, password, age) VALUES (?, ?, ?)', [email, password, age], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 module.exports = dataPool;
