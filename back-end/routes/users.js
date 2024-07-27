@@ -49,6 +49,17 @@ users.post('/login', async (req, res) => {
     }
 });
 
+// Get all users
+users.get('/all', async (req, res) => {
+    try {
+        const users = await DB.getAllUsers();
+        res.status(200).json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve users' });
+    }
+});
+
 // User session
 users.get('/session', (req, res) => {
     if (req.session.user) {

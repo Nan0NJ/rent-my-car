@@ -66,4 +66,16 @@ dataPool.AddUser = (email, password, age) => {
     });
 };
 
+// Get all users
+dataPool.getAllUsers = () => {
+    return new Promise((resolve, reject) => {
+        conn.query('SELECT email, password, age, approved FROM users', (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 module.exports = dataPool;
