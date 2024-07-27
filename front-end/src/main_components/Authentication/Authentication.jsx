@@ -108,7 +108,7 @@ function Authentication() {
     */
     const handleOutsideClick = (e) => {
         // If the click is outside of the form, we close it
-        if ((showSignIn || showSignUp) && !e.target.closest('.form')) {
+        if ((showSignIn || showSignUp) && !e.target.closest('.formLOGIN')) {
             setShowSignIn(false);
             setShowSignUp(false);
         }
