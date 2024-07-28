@@ -66,7 +66,7 @@ dataPool.AddUser = (email, password, age) => {
     });
 };
 
-// Get all users
+// Get all users FOR ME TO CHECK THAT SMT IS WORKING ;/////// 
 dataPool.getAllUsers = () => {
     return new Promise((resolve, reject) => {
         conn.query('SELECT email, password, age, approved FROM users', (err, results) => {
