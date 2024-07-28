@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// Connecting with the back-end
-import axios from "axios";
 // Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
 import "../../css/authentication-style.css";
@@ -21,13 +19,23 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
   const signIn = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8228/users/login', {
-        email,
-        password,
+      const response = await fetch('http://88.200.63.148:8228/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
       });
 
-      if (response.status !== 200) {
-        document.getElementById("error-input").innerText = "Login failed";
+      const errorElement = document.getElementById("error-input");
+
+      if (!response.ok) {
+        if (errorElement) {
+          errorElement.innerText = "Login failed";
+        }
         return;
       }
 
@@ -36,7 +44,10 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
       onClose();
     } catch (error) {
       console.error("Error during sign in:", error);
-      document.getElementById("error-input").innerText = "Login failed";
+      const errorElement = document.getElementById("error-input");
+      if (errorElement) {
+        errorElement.innerText = "Login failed";
+      }
     }
   };
 
@@ -62,9 +73,10 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
             className="show-password-button"
             onClick={toggleShowPassword}
           >
-            {showPassword ? < FiEye/> : < FiEyeOff />}
+            {showPassword ? <FiEye /> : <FiEyeOff />}
           </button>
         </div>
+        <span id="error-input" style={{ color: 'red' }}></span> {/* Error message element */}
         <button type="submit">Log In</button>
       </form>
     </div>
@@ -72,4 +84,4 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
 };
 
 export default SignIn;
-export { signedInEmail};
+export { signedInEmail };

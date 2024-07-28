@@ -22,7 +22,7 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
   const signUp = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8228/users/register', {
+      const response = await fetch('http://88.200.63.148:8228/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
