@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-
+// Connecting with the back-end
+import axios from "axios";
 // Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
 import "../../css/authentication-style.css";
 
-let signedUpEmail = null;
-
-// MOCH BUILD FOR SIGNING UP USERS FIXXX LATER WITH DB
-const mockUsers = {
-  "admin@example.com": { password: "adminpass", isAdmin: true },
-  "user@example.com": { password: "userpass", isAdmin: false }
-};
+let signedUpEmail = "";
 
 const SignUp = ({ onSignUpSuccess, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [age, setAge] = useState("");
   const location = useLocation();
 
   const toggleShowPassword = () => {
@@ -26,29 +22,32 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
   const signUp = async (e) => {
     e.preventDefault();
     try {
-      if (mockUsers[email]) {
-        document.getElementById("error-input").innerText = "Email already in use";
+      const response = await fetch('http://localhost:8228/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          age,
+        }),
+      });
+  
+      if (!response.ok) {
+        document.getElementById("error-input").innerText = "Registration failed";
         return;
       }
-
-      if (password.length < 6) {
-        console.log("Password is too weak");
-        return;
-      }
-
-      const isAdminPath = location.pathname === "/admin";
-      mockUsers[email] = {
-        password: password,
-        isAdmin: isAdminPath
-      };
-
+  
       signedUpEmail = email;
       onSignUpSuccess();
       onClose();
     } catch (error) {
       console.error("Error during sign up:", error);
+      document.getElementById("error-input").innerText = "Registration failed";
     }
   };
+  
 
   return (
     <div className="sign-in-container">
@@ -59,6 +58,12 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+        ></input>
+        <input
+          type="number"
+          placeholder="Enter your age"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
         ></input>
         <div className="password-input">
           <input

@@ -1,38 +1,18 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+// Connecting with the back-end
+import axios from "axios";
 // Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
 import "../../css/authentication-style.css";
 
-// MOCH BUILD FOR GETTING A SIGNED USER FIXXX LATER WITH DB
-let signedInEmail = null;
-let loggedClasses = {};
-let loggedAttendees = {};
-
-const mockUsers = {
-  "admin@example.com": {
-    password: "adminpass",
-    isAdmin: true,
-    classes: {
-      "Math 101": ["Alice", "Bob"],
-      "Science 102": ["Charlie", "Dave"]
-    }
-  },
-  "user@example.com": {
-    password: "userpass",
-    isAdmin: false,
-    classes: {}
-  }
-};
+let signedInEmail = "";
 
 const SignIn = ({ onSignInSuccess, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
-  const isAdminPath = location.pathname === "/admin";
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -40,49 +20,23 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
 
   const signIn = async (e) => {
     e.preventDefault();
-
     try {
-      if (mockUsers[email] && mockUsers[email].password === password) {
-        signedInEmail = email;
+      const response = await axios.post('http://localhost:8228/users/login', {
+        email,
+        password,
+      });
 
-        if (isAdminPath && mockUsers[email].isAdmin) {
-          const classesData = fetchInstructorClasses(signedInEmail);
-          if (classesData) {
-            const { classNames, attendees } = classesData;
-            loggedClasses = classNames;
-            loggedAttendees = attendees;
-            localStorage.setItem('isAdmin', 1);
-            navigate('/adminDetails');
-          }
-        } else {
-          localStorage.setItem('isAdmin', 0);
-        }
-
-        onSignInSuccess();
-        onClose();
-      } else {
-        console.log("Invalid email or password.");
+      if (response.status !== 200) {
+        document.getElementById("error-input").innerText = "Login failed";
+        return;
       }
+
+      signedInEmail = email;
+      onSignInSuccess();
+      onClose();
     } catch (error) {
-      console.log("Error during login:", error);
-    }
-  };
-
-  const fetchInstructorClasses = (signedInEmail) => {
-    try {
-      const userClasses = mockUsers[signedInEmail].classes;
-      const classNames = Object.keys(userClasses);
-      const attendees = userClasses;
-
-      console.log("Fetched Class Names:", classNames);
-      console.log("Attendees for classes:", attendees);
-
-      localStorage.setItem('loggedClasses', JSON.stringify(classNames));
-      localStorage.setItem('loggedAttendees', JSON.stringify(attendees));
-
-      return { classNames, attendees };
-    } catch (error) {
-      console.error("Error fetching matching classes:", error);
+      console.error("Error during sign in:", error);
+      document.getElementById("error-input").innerText = "Login failed";
     }
   };
 
@@ -118,4 +72,4 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
 };
 
 export default SignIn;
-export { signedInEmail, loggedClasses, loggedAttendees };
+export { signedInEmail};
