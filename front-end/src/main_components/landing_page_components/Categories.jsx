@@ -2,11 +2,11 @@ import React from "react";
 
 // Importing the files
 import './../../css/categories-style.css';
-import Sedan from './../../imgs/Sedan.png';
-import Cabriolet from './../../imgs/Cabriolet.png';
-import Coupe from './../../imgs/Coupe.png';
-import SUV from './../../imgs/SUV.png';
-import Micro from './../../imgs/Micro.png';
+import Sedan from './../../imgs/SedanREAL.png';
+import Cabriolet from './../../imgs/CabrioletREAL.png';
+import Coupe from './../../imgs/CoupeREAL.png';
+import SUV from './../../imgs/SUVREAL.png';
+import Micro from './../../imgs/MicroREAL.png';
 
 const Categories = () => {
     const buttons = [
