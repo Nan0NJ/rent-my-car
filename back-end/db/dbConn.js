@@ -54,14 +54,22 @@ dataPool.AuthUser = (email) => {
     });
 };
 
-// Add user
+// Using bcrypt with a hash function to secure passwords getting stored in the data base
+const bcrypt = require('bcrypt');
+const saltRounds = 10; 
+// Add user with hashed password
 dataPool.AddUser = (email, password, age) => {
     return new Promise((resolve, reject) => {
-        conn.query('INSERT INTO users (email, password, age) VALUES (?, ?, ?)', [email, password, age], (err, results) => {
+        bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
             if (err) {
                 return reject(err);
             }
-            return resolve(results);
+            conn.query('INSERT INTO users (email, password, age) VALUES (?, ?, ?)', [email, hashedPassword, age], (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            });
         });
     });
 };
