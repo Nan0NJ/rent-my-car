@@ -5,6 +5,7 @@ import axios from "axios";
 // Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
 import "../../css/authentication-style.css";
+import PopupMessage from "./PopupMessage";
 
 let signedUpEmail = "";
 
@@ -13,6 +14,7 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [age, setAge] = useState("");
+  const [error, setError] = useState("");
   const location = useLocation();
 
   const toggleShowPassword = () => {
@@ -35,7 +37,7 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
       });
   
       if (!response.ok) {
-        document.getElementById("error-input").innerText = "Registration failed";
+        setError("Registration failed");
         return;
       }
   
@@ -44,10 +46,13 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
       onClose();
     } catch (error) {
       console.error("Error during sign up:", error);
-      document.getElementById("error-input").innerText = "Registration failed";
+      setError("Registration failed");
     }
   };
-  
+
+  const closePopup = () => {
+    setError("");
+  };
 
   return (
     <div className="sign-in-container">
@@ -80,9 +85,9 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
             {showPassword ? <FiEye /> : <FiEyeOff />}
           </button>
         </div>
-        <span id="error-input"></span>
         <button type="submit">Sign Up</button>
       </form>
+      <PopupMessage message={error} onClose={closePopup} />
     </div>
   );
 };

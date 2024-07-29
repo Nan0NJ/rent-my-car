@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 // Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
 import "../../css/authentication-style.css";
+import PopupMessage from "./PopupMessage";
 
 let signedInEmail = "";
 
@@ -10,6 +11,7 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const toggleShowPassword = () => {
@@ -30,12 +32,8 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
         }),
       });
 
-      const errorElement = document.getElementById("error-input");
-
       if (!response.ok) {
-        if (errorElement) {
-          errorElement.innerText = "Login failed";
-        }
+        setError("Login failed");
         return;
       }
 
@@ -44,11 +42,12 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
       onClose();
     } catch (error) {
       console.error("Error during sign in:", error);
-      const errorElement = document.getElementById("error-input");
-      if (errorElement) {
-        errorElement.innerText = "Login failed";
-      }
+      setError("Login failed");
     }
+  };
+
+  const closePopup = () => {
+    setError("");
   };
 
   return (
@@ -76,9 +75,9 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
             {showPassword ? <FiEye /> : <FiEyeOff />}
           </button>
         </div>
-        <span id="error-input" style={{ color: 'red' }}></span> {/* Error message element */}
         <button type="submit">Log In</button>
       </form>
+      <PopupMessage message={error} onClose={closePopup} />
     </div>
   );
 };
