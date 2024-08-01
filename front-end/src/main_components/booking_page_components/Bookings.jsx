@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
-// Importing CSS
+// Importing files
 import './../../css/booking-style.css';
 import Cars from './CarItems';
 import TEST from './../../imgs/footer_car.png';
@@ -12,6 +12,7 @@ const useQuery = () => {
 };
 
 const BookingPage = () => {
+  const approval = localStorage.getItem('approvalStatus');
   const query = useQuery();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -156,18 +157,7 @@ const BookingPage = () => {
       <div className="car-results">
         {cars.length > 0 ? (
           cars.map((car) => (
-            car.taken ? (
-              <div key={car.id} className={`car-item ${car.taken ? 'car-taken' : ''}`}>
-                <img src={TEST} alt={car.name} className="car-img" />
-                <div className="car-info">
-                  <h3>{car.name}</h3>
-                  <p>Category: {car.category}</p>
-                  <p>Price: {car.price} €</p>
-                  <p>Model Year: {car.modelYear}</p>
-                  <p>Status: {car.taken ? 'Taken' : 'Available'}</p>
-                </div>
-              </div>
-            ) : (
+            approval === '1' ? (
               <Link to={`/car/${car.id}`} key={car.id} className={`car-item ${car.taken ? 'car-taken' : ''}`}>
                 <img src={TEST} alt={car.name} className="car-img" />
                 <div className="car-info">
@@ -178,6 +168,17 @@ const BookingPage = () => {
                   <p>Status: {car.taken ? 'Taken' : 'Available'}</p>
                 </div>
               </Link>
+            ) : (
+              <div key={car.id} className={`car-item ${car.taken ? 'car-taken' : ''}`}>
+                <img src={TEST} alt={car.name} className="car-img" />
+                <div className="car-info">
+                  <h3>{car.name}</h3>
+                  <p>Category: {car.category}</p>
+                  <p>Price: {car.price} €</p>
+                  <p>Model Year: {car.modelYear}</p>
+                  <p>Status: {car.taken ? 'Taken' : 'Available'}</p>
+                </div>
+              </div>
             )
           ))
         ) : (

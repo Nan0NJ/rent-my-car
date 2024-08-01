@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-// Connecting with the back-end
-import axios from "axios";
+
 // Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
 import "../../css/authentication-style.css";

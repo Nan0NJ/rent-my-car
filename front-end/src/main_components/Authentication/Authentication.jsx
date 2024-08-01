@@ -73,6 +73,8 @@ function Authentication() {
             localStorage.removeItem('loggedEmail');
             localStorage.removeItem('loggedClasses');
             localStorage.removeItem('isAdmin');
+            localStorage.removeItem('approvalStatus');
+            console.log(localStorage.getItem('approvalStatus'));
             setJwtToken(null);
             setLoggedIn(false);
             setShowAuthDetails(false);
