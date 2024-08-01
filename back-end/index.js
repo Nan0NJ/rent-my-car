@@ -11,12 +11,14 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: true } // We set it to TRUE if we are gonna use https, i'll set it to true
 })); // This is used for the session
 
 // Configurations
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
+  origin: 'http://localhost:3000', // front-end connection
+  credentials: true, // Allows for credentials (cookies, authorization headers, etc.)
   methods: ['GET', 'POST'],
 }));
 

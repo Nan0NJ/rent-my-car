@@ -36,7 +36,7 @@ users.post('/login', async (req, res) => {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 req.session.user = user;
-                res.status(200).json({ message: 'Login successful', user });
+                res.status(200).json({ message: 'Login successful', user, approvalStatus: user.approved });
             } else {
                 res.status(401).json({ message: 'Invalid email or password' });
             }
@@ -46,6 +46,17 @@ users.post('/login', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to login' });
+    }
+});
+
+// Get all user approvals
+users.get('/all-approvals', async (req, res) => {
+    try {
+        const approvals = await DB.getApproval();
+        res.status(200).json(approvals);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve user approvals' });
     }
 });
 

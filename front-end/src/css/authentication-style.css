@@ -116,3 +116,8 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+.text-details-auth {
+  text-align: center;
+  font-weight: 600;
+}

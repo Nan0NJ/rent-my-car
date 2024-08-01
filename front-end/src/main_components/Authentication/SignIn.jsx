@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 // Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
 import "../../css/authentication-style.css";
@@ -12,7 +12,6 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -37,7 +36,14 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
         return;
       }
 
+      const result = await response.json();
       signedInEmail = email;
+
+      // Store the JWT token and approval status
+      localStorage.setItem('jwtToken', result.token);
+      localStorage.setItem('approvalStatus', result.approvalStatus);
+      console.log("The status is = " + localStorage.getItem('approvalStatus'));
+
       onSignInSuccess();
       onClose();
     } catch (error) {

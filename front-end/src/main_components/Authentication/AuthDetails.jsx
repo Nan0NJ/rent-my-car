@@ -2,38 +2,29 @@ import React, { useEffect, useState } from "react";
 
 const AuthDetails = () => {
   const [authUser, setAuthUser] = useState(null);
+  const [approvalStatus, setApprovalStatus] = useState(null);
 
-  // Mock BUILD FOR LATER DEVELOPMENT
   useEffect(() => {
     const storedEmail = localStorage.getItem('loggedEmail');
+    const storedApprovalStatus = localStorage.getItem('approvalStatus');
+
     if (storedEmail) {
       setAuthUser({ email: storedEmail });
+      setApprovalStatus(storedApprovalStatus);
     } else {
       setAuthUser(null);
     }
-
-    // const listen = () => { DEVELOP A LISTNER FOR EMAILS LATER FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    //   const storedEmail = localStorage.getItem('loggedEmail');
-    //   if (storedEmail) {
-    //     setAuthUser({ email: storedEmail });
-    //   } else {
-    //     setAuthUser(null);
-    //   }
-    // };
-
-    return () => {
-      // Clean up listener LATER ON WITH DB CONNECTION
-    };
   }, []);
 
   return (
-    <div>
+    <div className="text-details-auth">
       {authUser ? (
         <>
           <p>{`Signed In as ${authUser.email}`}</p>
+          <p>{`Status: ${approvalStatus !== null ? approvalStatus : 'Loading...'}`}</p>
           {/* <button onClick={handleSignOut}>Log Out</button> */}
         </>
-      ) : null /* render nothing */}
+      ) : null}
     </div>
   );
 };

@@ -15,7 +15,6 @@ function Authentication() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [showAuthDetails, setShowAuthDetails] = useState(false);
     const [jwtToken, setJwtToken] = useState(null);
-
     /*
         Check for an existing JWT token in localStorage on component mount
         Key reason being that the user might have already signed in and closed the tab.
