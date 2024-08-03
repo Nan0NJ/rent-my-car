@@ -17,7 +17,7 @@ app.use(session({
 // Configurations
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: 'http://localhost:3001', // front-end connection
+  origin: 'http://localhost:3000', // front-end connection
   credentials: true, // Allows for credentials (cookies, authorization headers, etc.)
   methods: ['GET', 'POST'],
 }));

@@ -58,13 +58,13 @@ dataPool.AuthUser = (email) => {
 const bcrypt = require('bcrypt');
 const saltRounds = 10; 
 // Add user with hashed password
-dataPool.AddUser = (email, password, age) => {
+dataPool.AddUser = (email, password, age, imageBuffer) => {
     return new Promise((resolve, reject) => {
         bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
             if (err) {
                 return reject(err);
             }
-            conn.query('INSERT INTO users (email, password, age) VALUES (?, ?, ?)', [email, hashedPassword, age], (err, results) => {
+            conn.query('INSERT INTO users (email, password, age, image) VALUES (?, ?, ?, ?)', [email, hashedPassword, age, imageBuffer], (err, results) => {
                 if (err) {
                     return reject(err);
                 }
@@ -82,6 +82,20 @@ dataPool.getAllUsers = () => {
                 return reject(err);
             }
             return resolve(results);
+        });
+    });
+};
+
+// Check if email exists
+dataPool.CheckEmailExists = (email) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT email FROM users WHERE email = ?';
+        conn.query(query, [email], (err, results) => {
+            if (err) {
+                console.error('Database error:', err);
+                return reject(err);
+            }
+            return resolve(results.length > 0);
         });
     });
 };

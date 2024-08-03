@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-
-// Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
 import "../../css/authentication-style.css";
 import PopupMessage from "./PopupMessage";
@@ -13,41 +10,51 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [age, setAge] = useState("");
+  const [image, setImage] = useState(null);
   const [error, setError] = useState("");
-  const location = useLocation();
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const signUp = async (e) => {
-    e.preventDefault();
-    try {
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]);
+    console.log(e.target.files[0]); // Log the file object to ensure it's being captured
+};
+
+
+const signUp = async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append('email', email);
+  formData.append('password', password);
+  formData.append('age', age);
+  formData.append('image', image);
+
+  for (let pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+  }
+
+  try {
       const response = await fetch('http://88.200.63.148:8228/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          age,
-        }),
+          method: 'POST',
+          body: formData,
       });
-  
+
       if (!response.ok) {
-        setError("Registration failed");
-        return;
+          setError("Registration failed");
+          return;
       }
-  
+
       signedUpEmail = email;
       onSignUpSuccess();
       onClose();
-    } catch (error) {
+  } catch (error) {
       console.error("Error during sign up:", error);
       setError("Registration failed");
-    }
-  };
+  }
+};
+
 
   const closePopup = () => {
     setError("");
@@ -84,6 +91,8 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
             {showPassword ? <FiEye /> : <FiEyeOff />}
           </button>
         </div>
+        <label htmlFor="fileInput" className="filefordriverlicense">Insert Valid Driver's License (Max size: 2KB)</label>
+        <input type="file" id="fileInput" onChange={handleFileChange} />
         <button type="submit">Sign Up</button>
       </form>
       <PopupMessage message={error} onClose={closePopup} />
