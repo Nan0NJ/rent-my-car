@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Importing files
 import { FiEye, FiEyeOff } from "react-icons/fi"; // Import the icons
@@ -12,6 +12,13 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [isAdminPath, setIsAdminPath] = useState(false);
+
+  useEffect(() => {
+    if (window.location.pathname === "/admin") {
+      setIsAdminPath(true);
+    }
+  }, []);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -52,6 +59,35 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
       setError("Login failed");
     }
   };
+  
+  const signInAdmin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://88.200.63.148:8228/admins/loginadmin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        setError("Login failed");
+        return;
+      }
+
+      signedInEmail = email;
+      
+      onSignInSuccess();
+      onClose();
+    } catch (error) {
+      console.error("Error during sign in:", error);
+      setError("Login failed");
+    }
+  };
 
   const closePopup = () => {
     setError("");
@@ -59,8 +95,8 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
 
   return (
     <div className="sign-in-container">
-      <form onSubmit={signIn}>
-        <h1>Log In to your Account</h1>
+       <form onSubmit={isAdminPath ? signInAdmin : signIn}>
+       <h1>{isAdminPath ? "Admin Log In" : "Log In to your Account"}</h1>
         <input
           type="email"
           placeholder="Enter your email"

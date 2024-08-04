@@ -11,6 +11,7 @@ import Booking from './main_components/booking_page_components/Bookings';
 import CarDetails from './main_components/booking_page_components/CarDetails';
 import Dashboard from './main_components/Pages/MyDashboard';
 import Footer from './main_components/FooterBar/Footer';
+import Administration from './main_components/Administration/Administration';
 export default function App() {
   return (
     <Router>
@@ -24,9 +25,10 @@ export default function App() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/car/:id" element={<CarDetails />} />
+          <Route path="/admin" element={<Administration />} />
           {/* Add other routes */}
         </Routes>
-        <Footer />
+        {window.location.pathname !== '/admin' && <Footer />}
       </div>
     </Router>
   );

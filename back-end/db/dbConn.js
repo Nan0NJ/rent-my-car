@@ -54,6 +54,18 @@ dataPool.AuthUser = (email) => {
     });
 };
 
+// Authenticate admin
+dataPool.AuthAdmin = (email) => {
+    return new Promise((resolve, reject) => {
+        conn.query('SELECT * FROM admins WHERE email = ?', [email], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 // Using bcrypt with a hash function to secure passwords getting stored in the data base
 const bcrypt = require('bcrypt');
 const saltRounds = 10; 

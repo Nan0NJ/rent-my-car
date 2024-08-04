@@ -11,7 +11,7 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true } // We set it to TRUE if we are gonna use https, i'll set it to true
+  cookie: { secure: false } // We set it to TRUE if we are gonna use https, i'll set it to true
 })); // This is used for the session
 
 // Configurations
@@ -24,14 +24,21 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 const cars = require('./routes/cars');
 const users = require('./routes/users');
+const admins = require('./routes/admins');
 
 app.use('/cars', cars);
 app.use('/users', users);
+app.use('/admins', admins);
 
 app.get('/', (req, res) => {
   res.send('Rent My Car API');
+});
+
+app.get('/admins', (req, res) => {
+  res.send('Rent My Car ADMIN API');
 });
 
 app.listen(port, () => { console.log(`Server is running on port ${port}`); });

@@ -71,8 +71,6 @@ function Authentication() {
             */
             localStorage.removeItem('jwtToken');
             localStorage.removeItem('loggedEmail');
-            localStorage.removeItem('loggedClasses');
-            localStorage.removeItem('isAdmin');
             localStorage.removeItem('approvalStatus');
             console.log(localStorage.getItem('approvalStatus'));
             setJwtToken(null);

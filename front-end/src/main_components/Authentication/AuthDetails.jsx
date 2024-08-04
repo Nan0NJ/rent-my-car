@@ -26,7 +26,6 @@ const AuthDetails = () => {
           <p>{`Signed In as ${fullName.name}`}</p>
           <p>{`User: ${authUser.email}`}</p>
           <p>{`Status: ${approvalStatus && approvalStatus !== '0' ? 'Verified License' : 'Waiting for Verification'}`}</p>
-          {/* <button onClick={handleSignOut}>Log Out</button> */}
         </>
       ) : null}
     </div>
