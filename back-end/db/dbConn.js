@@ -58,13 +58,13 @@ dataPool.AuthUser = (email) => {
 const bcrypt = require('bcrypt');
 const saltRounds = 10; 
 // Add user with hashed password
-dataPool.AddUser = (email, password, age, imageBuffer) => {
+dataPool.AddUser = (email, password, fullname, age, imageBuffer) => {
     return new Promise((resolve, reject) => {
         bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
             if (err) {
                 return reject(err);
             }
-            conn.query('INSERT INTO users (email, password, age, image) VALUES (?, ?, ?, ?)', [email, hashedPassword, age, imageBuffer], (err, results) => {
+            conn.query('INSERT INTO users (email, password, fullname, age, image) VALUES (?, ?, ?, ?, ?)', [email, hashedPassword, fullname, age, imageBuffer], (err, results) => {
                 if (err) {
                     return reject(err);
                 }

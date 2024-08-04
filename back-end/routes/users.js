@@ -10,10 +10,10 @@ const upload = multer({ storage });
 
 // User REGISTER
 users.post('/register', upload.single('image'), async (req, res) => {
-    const { email, password, age } = req.body;
+    const { email, password, fullname, age } = req.body;
     const image = req.file;
 
-    if (!email || !password || !age || !image) {
+    if (!email || !password || !fullname || !age || !image) {
         return res.status(400).json({ error: 'Email, password, age, and image are required' });
     }
 
@@ -24,7 +24,7 @@ users.post('/register', upload.single('image'), async (req, res) => {
             return res.status(400).json({ error: 'Email already exists' });
         }
 
-        const result = await DB.AddUser(email, password, age, image.buffer);
+        const result = await DB.AddUser(email, password, fullname, age, image.buffer);
         res.status(201).json({ message: 'User registered successfully', userId: result.insertId });
     } catch (err) {
         console.error(err);

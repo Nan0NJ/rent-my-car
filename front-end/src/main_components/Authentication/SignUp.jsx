@@ -9,6 +9,7 @@ const SignUp = ({ onSignUpSuccess, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [fullname, setFullname] = useState("");
   const [age, setAge] = useState("");
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
@@ -28,6 +29,7 @@ const signUp = async (e) => {
   const formData = new FormData();
   formData.append('email', email);
   formData.append('password', password);
+  formData.append('fullname', fullname);
   formData.append('age', age);
   formData.append('image', image);
 
@@ -47,6 +49,7 @@ const signUp = async (e) => {
       }
 
       signedUpEmail = email;
+      localStorage.setItem('fullname', fullname);
       onSignUpSuccess();
       onClose();
   } catch (error) {
@@ -64,6 +67,12 @@ const signUp = async (e) => {
     <div className="sign-in-container">
       <form onSubmit={signUp} className="form-overlay">
         <h1>Create Account</h1>
+         <input
+          type="text"
+          placeholder="Enter your full name"
+          value={fullname}
+          onChange={(e) => setFullname(e.target.value)}
+        />
         <input
           type="email"
           placeholder="Enter your email"

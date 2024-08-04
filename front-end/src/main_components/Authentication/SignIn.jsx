@@ -42,6 +42,7 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
       // Store the JWT token and approval status
       localStorage.setItem('jwtToken', result.token);
       localStorage.setItem('approvalStatus', result.approvalStatus);
+      localStorage.setItem('fullname', result.user.fullname);
       console.log("The status is = " + localStorage.getItem('approvalStatus'));
 
       onSignInSuccess();
