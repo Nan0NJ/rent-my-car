@@ -84,6 +84,17 @@ users.get('/all', async (req, res) => {
     }
 });
 
+// Get all unapproved users
+users.get('/unapproved', async (req, res) => {
+    try {
+        const users = await DB.getUnapprovedUsers();
+        res.status(200).json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve unapproved users' });
+    }
+});
+
 // User session
 users.get('/session', (req, res) => {
     if (req.session.user) {
@@ -92,5 +103,4 @@ users.get('/session', (req, res) => {
         res.status(401).json({ error: 'No active session' });
     }
 });
-
 module.exports = users;

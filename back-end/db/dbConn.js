@@ -66,6 +66,25 @@ dataPool.AuthAdmin = (email) => {
     });
 };
 
+// Get all users with approval status 0
+dataPool.getUnapprovedUsers = () => {
+    return new Promise((resolve, reject) => {
+        conn.query('SELECT email, fullname, age, image FROM users WHERE approved = 0', (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            // Convert image BLOB to base64 string
+            const users = results.map(user => ({
+                email: user.email,
+                fullname: user.fullname,
+                age: user.age,
+                image: user.image ? Buffer.from(user.image).toString('base64') : null
+            }));
+            return resolve(users);
+        });
+    });
+};
+
 // Using bcrypt with a hash function to secure passwords getting stored in the data base
 const bcrypt = require('bcrypt');
 const saltRounds = 10; 

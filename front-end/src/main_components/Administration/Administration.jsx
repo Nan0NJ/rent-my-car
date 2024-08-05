@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+
+// Importing files
 import SignIn from "../Authentication/SignIn";
-import AuthDetails from "../Authentication/AuthDetails";
+import AdminDetails from "./AdminDetails";
 import "../../css/authentication-style.css"
 
 function Administration() {
@@ -79,7 +81,7 @@ function Administration() {
                     </div>
                 </div>
             )}
-            {showAuthDetails && <AuthDetails loggedIn={loggedIn} />}
+            {showAuthDetails && <AdminDetails loggedIn={loggedIn} />}
         </div>
     );
 }
