@@ -85,6 +85,19 @@ dataPool.getUnapprovedUsers = () => {
     });
 };
 
+// AdminMatch: Update user approval status to 1 based on email
+dataPool.AdminMatch = (email) => {
+    return new Promise((resolve, reject) => {
+        const query = 'UPDATE users SET approved = 1 WHERE email = ?';
+        conn.query(query, [email], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 // Using bcrypt with a hash function to secure passwords getting stored in the data base
 const bcrypt = require('bcrypt');
 const saltRounds = 10; 

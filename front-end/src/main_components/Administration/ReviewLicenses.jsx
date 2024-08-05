@@ -14,6 +14,34 @@ const ReviewLicenses = () => {
       });
   }, []);
 
+  const handleMatched = (email) => {
+    fetch("http://88.200.63.148:8228/users/match", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          alert(data.message);
+          // Optionally, remove the matched user from the local state
+          setUsers(users.filter(user => user.email !== email));
+        } else {
+          alert("Failed to update user approval status");
+        }
+      })
+      .catch(error => {
+        console.error("There was an error updating the user approval status!", error);
+      });
+  };
+
+  const handleUnmatched = (email) => {
+    console.log(`Unmatched user: ${email}`);
+    // Add your logic for unmatched user
+  };
+
   return (
     <div>
       <h2>User Licenses</h2>
@@ -26,6 +54,10 @@ const ReviewLicenses = () => {
             )}
             <h3>{user.fullname}</h3>
             <p>{user.email}</p>
+            <div className="user-actions">
+              <button className="" onClick={() => handleMatched(user.email)}>MATCHED</button>
+              <button onClick={() => handleUnmatched(user.email)}>UNMATCHED</button>
+            </div>
           </div>
         ))}
       </div>

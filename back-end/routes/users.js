@@ -95,6 +95,27 @@ users.get('/unapproved', async (req, res) => {
     }
 });
 
+// Admin match to update approval status
+users.post('/match', async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
+
+    try {
+        const result = await DB.AdminMatch(email);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'User approval status updated successfully' });
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to update user approval status' });
+    }
+});
+
 // User session
 users.get('/session', (req, res) => {
     if (req.session.user) {
