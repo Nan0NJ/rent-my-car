@@ -116,6 +116,27 @@ users.post('/match', async (req, res) => {
     }
 });
 
+// Delete user by email
+users.post('/deleteuser', async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
+
+    try {
+        const result = await DB.deleteUser(email);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'User deleted successfully' });
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to delete user' });
+    }
+});
+
 // User session
 users.get('/session', (req, res) => {
     if (req.session.user) {

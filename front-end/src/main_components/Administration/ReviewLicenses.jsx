@@ -38,8 +38,26 @@ const ReviewLicenses = () => {
   };
 
   const handleUnmatched = (email) => {
-    console.log(`Unmatched user: ${email}`);
-    // Add your logic for unmatched user
+    fetch("http://88.200.63.148:8228/users/deleteuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          alert(data.message);
+          // Remove the unmatched user from the local state
+          setUsers(users.filter(user => user.email !== email));
+        } else {
+          alert("Failed to delete user");
+        }
+      })
+      .catch(error => {
+        console.error("There was an error deleting the user!", error);
+      });
   };
 
   return (

@@ -98,6 +98,19 @@ dataPool.AdminMatch = (email) => {
     });
 };
 
+// Delete user by email
+dataPool.deleteUser = (email) => {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM users WHERE email = ?';
+        conn.query(query, [email], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 // Using bcrypt with a hash function to secure passwords getting stored in the data base
 const bcrypt = require('bcrypt');
 const saltRounds = 10; 
