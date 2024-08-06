@@ -72,6 +72,7 @@ const ReviewLicenses = () => {
             )}
             <h3>{user.fullname}</h3>
             <p>{user.email}</p>
+            <p>Age: {user.age}</p>
             <div className="user-actions">
               <button className="" onClick={() => handleMatched(user.email)}>MATCHED</button>
               <button onClick={() => handleUnmatched(user.email)}>UNMATCHED</button>
