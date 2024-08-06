@@ -145,4 +145,5 @@ users.get('/session', (req, res) => {
         res.status(401).json({ error: 'No active session' });
     }
 });
+
 module.exports = users;

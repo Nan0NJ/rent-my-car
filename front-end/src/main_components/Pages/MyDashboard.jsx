@@ -5,6 +5,7 @@ import Cars from './../booking_page_components/CarItems'; // TO CHECK WE NEED TH
 import './../../css/mydashboard-style.css'; 
 
 const Dashboard = () => {
+  const approval = localStorage.getItem('approvalStatus');
   const [user, setUser] = useState({
     name: 'TEST FOR NOW',
     email: 'test@test.com',
@@ -29,6 +30,14 @@ const Dashboard = () => {
       setRentHistory([...rentHistory, car]);
     }
   };
+
+  if (approval === '0' || approval === null) {
+    return (
+      <div className="awaiting-verification">
+        <p>Awaiting Verification, Please be patient!</p>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard">

@@ -1,3 +1,17 @@
+/*
+    CSS for the DASHBOARD
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
+:root {
+    --font-sansita-one: 'Sansita One', sans-serif;
+}
+
+.awaiting-verification {
+  text-align: center;
+  font-family: var(--font-sansita-one);
+}
+
 .dashboard {
     padding: 20px;
     max-width: 1200px;
