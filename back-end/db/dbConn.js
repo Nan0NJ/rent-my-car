@@ -85,6 +85,19 @@ dataPool.getUnapprovedUsers = () => {
     });
 };
 
+// Get all information from DB for a specific user
+dataPool.getUserDetails = (email) => {
+    return new Promise((resolve, reject) => {
+        conn.query('SELECT email, fullname, age, cars_for_rent, rented_cars FROM users WHERE email = ?', [email], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+
 // AdminMatch: Update user approval status to 1 based on email
 dataPool.AdminMatch = (email) => {
     return new Promise((resolve, reject) => {

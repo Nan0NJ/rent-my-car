@@ -1,0 +1,99 @@
+/* CSS for Add Car Component */
+
+.add-car-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .add-car-container h1 {
+    margin-bottom: 20px;
+  }
+  
+  .add-car-container input[type="text"],
+  .add-car-container input[type="number"],
+  .add-car-container input[type="file"],
+  .add-car-container select,
+  .add-car-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .add-car-container input::placeholder,
+  .add-car-container select::placeholder,
+  .add-car-container textarea::placeholder {
+    text-align: left;
+  }
+  
+  .add-car-container button[type="submit"] {
+    background-color: #02775a;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-car-container button[type="submit"]:hover {
+    background-color: #066952;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  /* Modal styles */
+  .modal {
+    position: fixed;
+    top: 60px; /* Adjust this value to be equal to the height of your navbar */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 60px); /* Adjust this value to be equal to the height of your navbar */
+    background: rgba(0, 0, 0, 0.7); 
+    z-index: 2; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+  
+  .formADD {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative; 
+    text-align: center;
+    width: 100%; 
+    max-width: 500px; 
+    margin: 20px;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #02775a; 
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  

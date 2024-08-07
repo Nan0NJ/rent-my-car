@@ -62,6 +62,26 @@ users.post('/login', async (req, res) => {
     }
 });
 
+// Get all information from DB for a specific user
+users.get('/userdetails', async (req, res) => {
+    const email = req.query.email;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
+
+    try {
+        const users = await DB.getUserDetails(email);
+        if (users.length === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(200).json(users);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve user' });
+    }
+});
+
 // Get all user approvals
 users.get('/all-approvals', async (req, res) => {
     try {

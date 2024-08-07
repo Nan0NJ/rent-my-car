@@ -1,10 +1,8 @@
-/*
-    CSS for the DASHBOARD
-*/
+/* CSS for the DASHBOARD */
 
 @import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
 :root {
-    --font-sansita-one: 'Sansita One', sans-serif;
+  --font-sansita-one: 'Sansita One', sans-serif;
 }
 
 .awaiting-verification {
@@ -12,32 +10,97 @@
   font-family: var(--font-sansita-one);
 }
 
+.dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #f0f0f0;
+  min-height: 100vh; /* Full height */
+}
+
 .dashboard {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .account-info, .rented-cars, .rent-history, .add-rented-car {
-    margin-bottom: 20px;
-  }
-  
-  .car-item {
-    display: flex;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .car-img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    margin-right: 20px;
-  }
-  
-  .car-info {
-    flex-grow: 1;
-  }
-  
+  padding: 20px;
+  max-width: 800px;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.account-info, .accordion-section, .add-rented-car-section {
+  margin-bottom: 20px;
+}
+
+.account-info {
+  text-align: center;
+}
+
+.accordion-section h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 1.5em;
+  font-family: var(--font-sansita-one);
+  margin: 10px 0;
+}
+
+.accordion-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.accordion-content {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.car-item {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.car-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.car-info {
+  flex-grow: 1;
+}
+
+/* Unique styles for "Add Rented Car" section */
+.add-rented-car-section {
+  text-align: center;
+}
+
+.add-rented-car-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.add-rented-car-button {
+  background-image: linear-gradient(to right, #02775a, #27db9f);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.add-rented-car-button:hover {
+  background-image: linear-gradient(to right, #27db9f, #02775a);
+}
