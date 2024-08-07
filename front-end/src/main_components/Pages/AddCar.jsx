@@ -16,30 +16,52 @@ const AddCar = ({ onAddCarSuccess, onClose }) => {
   const [price, setPrice] = useState('');
   const [suggestedPrice, setSuggestedPrice] = useState('');
   const [error, setError] = useState('');
-  const modalRef = useRef(null); // Reference to the modal
+  const modalRef = useRef(null);
 
-  const calculateDailyRate = (category, modelYear, mileage, isDamaged) => {
+  const fetchCarPrice = async (carName) => {
+    try {
+      const response = await fetch(`http://88.200.63.148:8228/model_cars/car-price?name=${carName}`);
+      if (response.ok) {
+        const data = await response.json();
+        return data.price;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching car price:', error);
+      return null;
+    }
+  };
+
+  const calculateDailyRate = async (category, modelYear, mileage, isDamaged, carName) => {
     let baseRate;
 
-    // Set base daily rate according to the category
-    switch (category) {
-      case 'Sedan':
-        baseRate = 50;
-        break;
-      case 'Cabriolet':
-        baseRate = 70;
-        break;
-      case 'Coupe':
-        baseRate = 60;
-        break;
-      case 'SUV':
-        baseRate = 80;
-        break;
-      case 'Micro':
-        baseRate = 40;
-        break;
-      default:
-        baseRate = 50;
+    // Fetch the car full price from the database
+    const carPrice = await fetchCarPrice(carName);
+
+    if (carPrice) {
+      baseRate = carPrice / 365; // Assuming daily rate is 1/365th of the car's price
+    } else {
+      // Set default base daily rate according to the category if car price is not found
+      switch (category) {
+        case 'Sedan':
+          baseRate = 50;
+          break;
+        case 'Cabriolet':
+          baseRate = 70;
+          break;
+        case 'Coupe':
+          baseRate = 60;
+          break;
+        case 'SUV':
+          baseRate = 80;
+          break;
+        case 'Micro':
+          baseRate = 40;
+          break;
+        default:
+          baseRate = 50;
+      }
     }
 
     // Adjust rate based on model year
@@ -64,11 +86,14 @@ const AddCar = ({ onAddCarSuccess, onClose }) => {
   };
 
   useEffect(() => {
-    if (category && modelYear && mileagePassed !== '' && isDamaged !== '') {
-      const suggested = calculateDailyRate(category, parseInt(modelYear), parseInt(mileagePassed), isDamaged);
-      setSuggestedPrice(suggested);
-    }
-  }, [category, modelYear, mileagePassed, isDamaged]);
+    const updateSuggestedPrice = async () => {
+      if (category && modelYear && mileagePassed !== '' && isDamaged !== '' && carName) {
+        const suggested = await calculateDailyRate(category, parseInt(modelYear), parseInt(mileagePassed), isDamaged, carName);
+        setSuggestedPrice(suggested);
+      }
+    };
+    updateSuggestedPrice();
+  }, [category, modelYear, mileagePassed, isDamaged, carName]);
 
   const handleAddCar = async (e) => {
     e.preventDefault();
@@ -169,7 +194,7 @@ const AddCar = ({ onAddCarSuccess, onClose }) => {
         />
         <input
           type="number"
-          placeholder="Mileage Passed"
+          placeholder="Mileage Passed (in km)"
           value={mileagePassed}
           onChange={(e) => setMileagePassed(e.target.value)}
           required
@@ -182,16 +207,19 @@ const AddCar = ({ onAddCarSuccess, onClose }) => {
           />
           Damaged
         </label>
+        <p>Upload Green Card:</p>
         <input
           type="file"
           onChange={(e) => handleFileChange(e, setGreenCard)}
           required
         />
+        <p>Upload Car Image:</p>
         <input
           type="file"
           onChange={(e) => handleFileChange(e, setCarImage)}
           required
         />
+        <p>Set Price:</p>
         <input
           type="number"
           placeholder={`Suggested Daily Rate: ${suggestedPrice ? `$${suggestedPrice}` : ''}`}

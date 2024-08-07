@@ -170,4 +170,21 @@ dataPool.CheckEmailExists = (email) => {
     });
 };
 
+// Get all car models prices
+dataPool.getCarPriceByName = (carName) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT car_full_price FROM model_cars WHERE LOWER(car_name) = ?';
+        conn.query(query, [carName.toLowerCase()], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            if (results.length > 0) {
+                return resolve(results[0].car_full_price);
+            } else {
+                return resolve(null); // Car not found
+            }
+        });
+    });
+};
+
 module.exports = dataPool;

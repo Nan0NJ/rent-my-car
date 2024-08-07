@@ -28,10 +28,12 @@ app.use(express.urlencoded({ extended: true }));
 const cars = require('./routes/cars');
 const users = require('./routes/users');
 const admins = require('./routes/admins');
+const model_cars = require('./routes/model_cars');
 
 app.use('/cars', cars);
 app.use('/users', users);
 app.use('/admins', admins);
+app.use('/model_cars', model_cars);
 
 app.get('/', (req, res) => {
   res.send('Rent My Car API');
