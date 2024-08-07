@@ -13,8 +13,6 @@ models.get('/car-price', async (req, res) => {
         const price = await DB.getCarPriceByName(carName);
         if (price !== null) {
             res.status(200).json({ price });
-        } else {
-            res.status(404).json({ error: 'Car not found' });
         }
     } catch (err) {
         console.error(err);

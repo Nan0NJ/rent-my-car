@@ -97,19 +97,26 @@ const AddCar = ({ onAddCarSuccess, onClose }) => {
 
   const handleAddCar = async (e) => {
     e.preventDefault();
-    // Add logic to add a car
-    // Example fetch request to your API endpoint
+
+    // Get the user's email from localStorage
+    const userEmail = localStorage.getItem('loggedEmail');
+
+    // Generate a unique ID for the car based on the car name and user's email
+    const carId = `${carName}_${userEmail}`;
+
     try {
       const formData = new FormData();
-      formData.append('carName', carName);
-      formData.append('category', category);
-      formData.append('modelYear', modelYear);
-      formData.append('carInfo', carInfo);
-      formData.append('locationCity', locationCity);
-      formData.append('mileagePassed', mileagePassed);
-      formData.append('isDamaged', isDamaged);
-      formData.append('greenCard', greenCard);
-      formData.append('carImage', carImage);
+      formData.append('car_id', carId);
+      formData.append('car_name', carName);
+      formData.append('car_category', category);
+      formData.append('car_owner', userEmail);
+      formData.append('model_year', modelYear);
+      formData.append('car_information', carInfo);
+      formData.append('car_location', locationCity);
+      formData.append('car_mileage', mileagePassed);
+      formData.append('is_damaged', isDamaged ? 'true' : 'false');
+      formData.append('green_card', greenCard);
+      formData.append('car_img', carImage);
       formData.append('price', price);
 
       const response = await fetch('http://88.200.63.148:8228/cars/add', {
