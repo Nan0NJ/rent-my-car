@@ -52,4 +52,31 @@ cars.post('/add', upload.fields([{ name: 'green_card', maxCount: 1 }, { name: 'c
     }
 });
 
+// Route to get all cars
+cars.get('/all', async (req, res) => {
+    try {
+        const cars = await DB.getAllCars();
+        res.status(200).json(cars);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to fetch cars' });
+    }
+});
+
+// Get car details by ID
+cars.get('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const car = await DB.getCarById(id);
+        if (!car || car.length === 0) {
+            return res.status(404).json({ error: 'Car not found' });
+        }
+        res.json(car[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve car details' });
+    }
+});
+
 module.exports = cars;

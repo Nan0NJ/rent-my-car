@@ -1,12 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-
-// Importing files
 import './../../css/booking-style.css';
-import Cars from './CarItems';
-import TEST from './../../imgs/footer_car.png';
 
-// Helper function to get query parameters
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
@@ -24,10 +19,28 @@ const BookingPage = () => {
   });
   const [showFilters, setShowFilters] = useState(false);
   const [cars, setCars] = useState([]);
+  const [filteredCars, setFilteredCars] = useState([]);
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const response = await fetch('http://88.200.63.148:8228/cars/all');
+        if (response.ok) {
+          const data = await response.json();
+          setCars(data);
+        } else {
+          console.error('Failed to fetch cars');
+        }
+      } catch (error) {
+        console.error('Error fetching cars:', error);
+      }
+    };
+    fetchCars();
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFilters({ ...filters, [name]: value });
+    setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
   };
 
   const handleSearchChange = (event) => {
@@ -35,21 +48,19 @@ const BookingPage = () => {
   };
 
   const filterCars = useCallback(() => {
-    // Simulate fetching data from an API
-    const fetchedCars = Cars;
-
-    const filteredCars = fetchedCars.filter((car) => {
+    const filteredCars = cars.filter((car) => {
       return (
-        car.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (!filters.category || car.category === filters.category) &&
-        car.price >= filters.minPrice &&
-        car.price <= filters.maxPrice &&
-        (!filters.modelYear || car.modelYear.toString() === filters.modelYear)
+        car.car_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (!filters.category || car.car_category === filters.category) &&
+        (!filters.modelYear || car.model_year.toString() === filters.modelYear)
       );
     });
+    setFilteredCars(filteredCars);
+  }, [filters, searchTerm, cars]);
 
-    setCars(filteredCars);
-  }, [filters, searchTerm]);
+  useEffect(() => {
+    filterCars();
+  }, [filters, searchTerm, cars, filterCars]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -62,17 +73,8 @@ const BookingPage = () => {
 
   const handlePriceChange = (event) => {
     const { name, value } = event.target;
-    setFilters({ ...filters, [name]: Number(value) });
+    setFilters((prevFilters) => ({ ...prevFilters, [name]: Number(value) }));
   };
-
-  useEffect(() => {
-    filterCars();
-  }, [filters, searchTerm, filterCars]);
-
-  useEffect(() => {
-    // Run filterCars initially to load cars based on initial filters
-    filterCars();
-  }, [filterCars]);
 
   return (
     <div className="booking-page">
@@ -112,11 +114,11 @@ const BookingPage = () => {
               className="filter-select"
             >
               <option value="">Select Category</option>
-              <option value="sedan">Sedan</option>
-              <option value="cabriolet">Cabriolet</option>
-              <option value="coupe">Coupe</option>
-              <option value="suv">SUV</option>
-              <option value="micro">Micro</option>
+              <option value="Sedan">Sedan</option>
+              <option value="Cabriolet">Cabriolet</option>
+              <option value="Coupe">Coupe</option>
+              <option value="SUV">SUV</option>
+              <option value="Micro">Micro</option>
             </select>
             <div className="price-filter">
               <label>Min Price: {filters.minPrice} €</label>
@@ -155,32 +157,35 @@ const BookingPage = () => {
       </form>
 
       <div className="car-results">
-        {cars.length > 0 ? (
-          cars.map((car) => (
-            approval === '1' ? (
-              <Link to={`/car/${car.id}`} key={car.id} className={`car-item ${car.taken ? 'car-taken' : ''}`}>
-                <img src={TEST} alt={car.name} className="car-img" />
-                <div className="car-info">
-                  <h3>{car.name}</h3>
-                  <p>Category: {car.category}</p>
-                  <p>Price: {car.price} €</p>
-                  <p>Model Year: {car.modelYear}</p>
-                  <p>Status: {car.taken ? 'Taken' : 'Available'}</p>
-                </div>
-              </Link>
-            ) : (
-              <div key={car.id} className={`car-item ${car.taken ? 'car-taken' : ''}`}>
-                <img src={TEST} alt={car.name} className="car-img" />
-                <div className="car-info">
-                  <h3>{car.name}</h3>
-                  <p>Category: {car.category}</p>
-                  <p>Price: {car.price} €</p>
-                  <p>Model Year: {car.modelYear}</p>
-                  <p>Status: {car.taken ? 'Taken' : 'Available'}</p>
-                </div>
+        {filteredCars.length > 0 ? (
+          filteredCars.map((car) => {
+            const carId = `${car.car_name}_${car.car_owner}`; // Create the car_id by concatenating car_name and car_owner
+            return (
+              <div key={carId}>
+                {approval === '1' ? (
+                  <Link to={`/car/${carId}`} className="car-item">
+                    <img src={`data:image/jpeg;base64,${car.car_img}`} alt={car.car_name} className="car-img" />
+                    <div className="car-info">
+                      <h3>{car.car_name}</h3>
+                      <p>Category: {car.car_category}</p>
+                      <p>Location: {car.car_location}</p>
+                      <p>Information: {car.car_information}</p>
+                    </div>
+                  </Link>
+                ) : (
+                  <div className="car-item">
+                    <img src={`data:image/jpeg;base64,${car.car_img}`} alt={car.car_name} className="car-img" />
+                    <div className="car-info">
+                      <h3>{car.car_name}</h3>
+                      <p>Category: {car.car_category}</p>
+                      <p>Location: {car.car_location}</p>
+                      <p>Information: {car.car_information}</p>
+                    </div>
+                  </div>
+                )}
               </div>
-            )
-          ))
+            );
+          })
         ) : (
           <p>No cars found</p>
         )}

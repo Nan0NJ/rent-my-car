@@ -1,32 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
-// Importing files
-import Cars from './CarItems';
 import './../../css/cardetails-style.css';
-import TEST from './../../imgs/footer_car.png'; // LATER CHANGE TO DATABASE
 
 const CarDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // id will be car_name_car_owner passed from the booking page
   const navigate = useNavigate();
-  const car = Cars.find(car => car.id === parseInt(id));
+  const [car, setCar] = useState(null);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchCarDetails = async () => {
+      try {
+        console.log(`Fetching car details for ID: ${id}`);
+        const response = await fetch(`http://88.200.63.148:8228/cars/${id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch car details');
+        }
+        const data = await response.json();
+        setCar(data);
+      } catch (error) {
+        console.error('Error fetching car details:', error);
+        setError('Failed to fetch car details');
+      }
+    };
+
+    fetchCarDetails();
+  }, [id]);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   if (!car) {
-    return <p>Car not found</p>;
+    return <p>Loading car details...</p>;
   }
+
+  const imageUrl = car.car_img ? `data:image/jpeg;base64,${car.car_img}` : '';
 
   return (
     <div className="car-details">
-      <img src={TEST} alt={car.name} className="car-img" />
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={car.car_name}
+          className="car-imgDETAILS"
+        />
+      )}
       <div className="car-info">
-        <h3 className='car-title-detail'>{car.name}</h3>
-        <p className='car-detail-text'>Category: {car.category}</p>
-        <p className='car-detail-text'>Price: {car.price} €</p>
-        <p className='car-detail-text'>Model Year: {car.modelYear}</p>
-        <p className='car-detail-text'>Additional Information: {car.information}</p>
-        <p className='car-detail-status'>Status: {car.taken ? 'Taken' : 'Available'}</p>
-        <button className="rent-button" disabled={car.taken}>Rent Now</button>
-        <button className="back-button" onClick={() => navigate(-1)}>Return Back</button>
+        <h3 className="car-title-detail">{car.car_name}</h3>
+        <p className="car-detail-text">Category: {car.car_category}</p>
+        <p className="car-detail-text">Price: {car.price} €</p>
+        <p className="car-detail-text">Model Year: {car.model_year}</p>
+        <p className="car-detail-text">Location: {car.car_location}</p>
+        <p className="car-detail-text">Additional Information: {car.car_information}</p>
+        <button className="rent-button">Rent Now</button>
+        <button className="back-button" onClick={() => navigate(-1)}>
+          Return Back
+        </button>
       </div>
     </div>
   );

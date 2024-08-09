@@ -8,7 +8,7 @@ const conn = mysql.createConnection({
 });
 
 conn.connect((err) => {
-    if(err){
+    if (err) {
         console.log("ERROR: " + err.message);
         return;
     }
@@ -19,11 +19,17 @@ let dataPool = {};
 
 dataPool.getAllCars = () => {
     return new Promise((resolve, reject) => {
-        conn.query('SELECT * FROM cars', (err, results) => {
+        const query = 'SELECT car_name, car_category, car_location, car_information, car_owner, car_img FROM cars';
+        conn.query(query, (err, results) => {
             if (err) {
                 return reject(err);
             }
-            return resolve(results);
+            // Convert car_img BLOB to base64 string
+            const cars = results.map(car => ({
+                ...car,
+                car_img: car.car_img ? Buffer.from(car.car_img).toString('base64') : null
+            }));
+            return resolve(cars);
         });
     });
 };
@@ -34,7 +40,13 @@ dataPool.getCarById = (id) => {
             if (err) {
                 return reject(err);
             }
-            return resolve(results);
+            if (results.length > 0) {
+                const car = results[0];
+                car.car_img = car.car_img ? Buffer.from(car.car_img).toString('base64') : null;
+                return resolve([car]);
+            } else {
+                return resolve([]); // No car found
+            }
         });
     });
 };
@@ -142,7 +154,7 @@ dataPool.deleteUser = (email) => {
 
 // Using bcrypt with a hash function to secure passwords getting stored in the data base
 const bcrypt = require('bcrypt');
-const saltRounds = 10; 
+const saltRounds = 10;
 // Add user with hashed password
 dataPool.AddUser = (email, password, fullname, age, imageBuffer) => {
     return new Promise((resolve, reject) => {

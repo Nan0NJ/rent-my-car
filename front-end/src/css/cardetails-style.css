@@ -12,9 +12,9 @@
     align-items: center;
 }
 
-.car-img {
+.car-imgDETAILS {
     width: 300px;
-    height: 300px;
+    height: auto;
 }
 
 .car-title-detail {
