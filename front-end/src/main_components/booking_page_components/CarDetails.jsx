@@ -49,7 +49,7 @@ const CarDetails = () => {
       <div className="car-info">
         <h3 className="car-title-detail">{car.car_name}</h3>
         <p className="car-detail-text">Category: {car.car_category}</p>
-        <p className="car-detail-text">Price: {car.price} €</p>
+        <p className="car-detail-text">Price: {car.car_price} €</p>
         <p className="car-detail-text">Model Year: {car.model_year}</p>
         <p className="car-detail-text">Location: {car.car_location}</p>
         <p className="car-detail-text">Additional Information: {car.car_information}</p>

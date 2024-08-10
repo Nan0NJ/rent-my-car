@@ -19,7 +19,7 @@ let dataPool = {};
 
 dataPool.getAllCars = () => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT car_name, car_category, car_location, car_information, car_owner, car_img FROM cars';
+        const query = 'SELECT car_name, car_category, car_location, car_information, car_owner, car_img, car_price FROM cars';
         conn.query(query, (err, results) => {
             if (err) {
                 return reject(err);

@@ -170,6 +170,7 @@ const BookingPage = () => {
                       <p>Category: {car.car_category}</p>
                       <p>Location: {car.car_location}</p>
                       <p>Information: {car.car_information}</p>
+                      <p>Price: {car.car_price} €</p>
                     </div>
                   </Link>
                 ) : (
@@ -180,6 +181,7 @@ const BookingPage = () => {
                       <p>Category: {car.car_category}</p>
                       <p>Location: {car.car_location}</p>
                       <p>Information: {car.car_information}</p>
+                      <p>Price: {car.car_price} €</p>
                     </div>
                   </div>
                 )}
