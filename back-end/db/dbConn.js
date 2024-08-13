@@ -19,7 +19,7 @@ let dataPool = {};
 
 dataPool.getAllCars = () => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT car_name, car_category, car_location, car_information, car_owner, car_img, car_price FROM cars';
+        const query = 'SELECT car_name, car_category, car_location, car_information, car_owner, car_img, car_price, car_approved FROM cars';
         conn.query(query, (err, results) => {
             if (err) {
                 return reject(err);
@@ -113,17 +113,52 @@ dataPool.getUnapprovedUsers = () => {
     });
 };
 
-// Get all information from DB for a specific user
-dataPool.getUserDetails = (email) => {
+// Get all cars with approval status 0
+dataPool.getUnapprovedCars = () => {
     return new Promise((resolve, reject) => {
-        conn.query('SELECT email, fullname, age, cars_for_rent, rented_cars FROM users WHERE email = ?', [email], (err, results) => {
+        conn.query('SELECT car_name, car_category, car_owner, model_year, car_information, car_location, car_mileage, car_price, car_img, green_card FROM cars WHERE car_approved = 0', (err, results) => {
             if (err) {
                 return reject(err);
             }
-            return resolve(results);
+            // Convert image and green_card BLOBs to base64 strings
+            const cars = results.map(car => ({
+                car_name: car.car_name,
+                car_category: car.car_category,
+                car_owner: car.car_owner,
+                model_year: car.model_year,
+                car_information: car.car_information,
+                car_location: car.car_location,
+                car_mileage: car.car_mileage,
+                car_price: car.car_price,
+                car_img: car.car_img ? Buffer.from(car.car_img).toString('base64') : null,
+                green_card: car.green_card ? Buffer.from(car.green_card).toString('base64') : null
+            }));
+            return resolve(cars);
         });
     });
 };
+
+
+dataPool.getUserDetails = (email) => {
+    return new Promise((resolve, reject) => {
+        conn.query('SELECT email, fullname, age, cars_for_rent, rented_cars, image FROM users WHERE email = ?', [email], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+
+            // Check if results were returned
+            if (results.length > 0) {
+                const user = results[0];
+                // Convert image BLOB to base64 string
+                user.image = user.image ? Buffer.from(user.image).toString('base64') : null;
+                return resolve([user]);
+            } else {
+                return resolve([]); // No user found
+            }
+        });
+    });
+};
+
 
 
 // AdminMatch: Update user approval status to 1 based on email

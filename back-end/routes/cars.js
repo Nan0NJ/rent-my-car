@@ -63,6 +63,17 @@ cars.get('/all', async (req, res) => {
     }
 });
 
+// Get all unapproved cars
+cars.get('/unapproved', async (req, res) => {
+    try {
+        const cars = await DB.getUnapprovedCars();
+        res.status(200).json(cars);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to retrieve unapproved users' });
+    }
+});
+
 // Get car details by ID
 cars.get('/:id', async (req, res) => {
     const { id } = req.params;

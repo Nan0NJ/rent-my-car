@@ -50,6 +50,7 @@ const BookingPage = () => {
   const filterCars = useCallback(() => {
     const filteredCars = cars.filter((car) => {
       return (
+        car.car_approved === 1 && // Only show approved cars
         car.car_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (!filters.category || car.car_category === filters.category) &&
         (!filters.modelYear || car.model_year.toString() === filters.modelYear)
