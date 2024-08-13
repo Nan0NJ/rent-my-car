@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useRef } from 'react';
+import emailjs from 'emailjs-com';
 
 import './../../css/contactus-style.css'; 
 import Email from './../../imgs/email.png';
@@ -7,9 +8,26 @@ import Location from './../../imgs/location.png';
 import Shape from './../../imgs/shape.png';
 
 const Contact = () => {
+  const form = useRef();
+
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to the top of the page when the component mounts
   }, []);
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('gl1x_10001', 'template_f4w5p8k', form.current, 'eeKxh6kHpXXa9AokZ')
+      .then((result) => {
+          console.log(result.text);
+          alert('Message Sent Successfully!');
+          window.location.reload(); 
+      }, (error) => {
+          console.log(error.text);
+          alert('Failed to Send Message');
+      });
+  };
+
   return (
     <div className="container">
       <span className="big-circle"></span>
@@ -41,7 +59,7 @@ const Contact = () => {
           <span className="circle one"></span>
           <span className="circle two"></span>
 
-          <form action="index.html" autocomplete="off">
+          <form ref={form} onSubmit={sendEmail} autoComplete="off">
             <h3 className="title">Give Feedback</h3>
             <div className="input-container">
               <input type="text" name="name" className="input" placeholder='Username'/>
@@ -72,4 +90,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
