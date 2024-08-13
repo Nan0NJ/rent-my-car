@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './../../css/cardetails-style.css';
 
 const CarDetails = () => {
-  const { id } = useParams(); // id will be car_name_car_owner passed from the booking page
+  const { id } = useParams(); 
   const navigate = useNavigate();
   const [car, setCar] = useState(null);
   const [error, setError] = useState('');
@@ -53,10 +53,14 @@ const CarDetails = () => {
         <p className="car-detail-text">Model Year: {car.model_year}</p>
         <p className="car-detail-text">Location: {car.car_location}</p>
         <p className="car-detail-text">Additional Information: {car.car_information}</p>
-        <button className="rent-button">Rent Now</button>
-        <button className="back-button" onClick={() => navigate(-1)}>
-          Return Back
-        </button>
+        
+        {/* Button container for centering */}
+        <div className="button-container">
+          <button className="rent-button">Rent Now</button>
+          <button className="back-button" onClick={() => navigate(-1)}>
+            Return Back
+          </button>
+        </div>
       </div>
     </div>
   );
