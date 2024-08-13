@@ -74,6 +74,48 @@ cars.get('/unapproved', async (req, res) => {
     }
 });
 
+// Cars match to update approval status
+cars.post('/matchcar', async (req, res) => {
+    const { car_id } = req.body;
+
+    if (!car_id) {
+        return res.status(400).json({ error: 'Car_id is required' });
+    }
+
+    try {
+        const result = await DB.CarMatch(car_id);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Car approval status updated successfully' });
+        } else {
+            res.status(404).json({ error: 'Car not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to update car approval status' });
+    }
+});
+
+// Delete car by car_id
+cars.post('/deletecar', async (req, res) => {
+    const { car_id } = req.body;
+
+    if (!car_id) {
+        return res.status(400).json({ error: 'Car_id is required' });
+    }
+
+    try {
+        const result = await DB.deleteCar(car_id);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Car deleted successfully' });
+        } else {
+            res.status(404).json({ error: 'Car not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to delete car' });
+    }
+});
+
 // Get car details by ID
 cars.get('/:id', async (req, res) => {
     const { id } = req.params;

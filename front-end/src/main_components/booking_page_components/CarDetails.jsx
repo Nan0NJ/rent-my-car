@@ -56,8 +56,8 @@ const CarDetails = () => {
         
         {/* Button container for centering */}
         <div className="button-container">
-          <button className="rent-button">Rent Now</button>
-          <button className="back-button" onClick={() => navigate(-1)}>
+          <button className="rent-buttonCAR">Rent Now</button>
+          <button className="back-buttonCAR" onClick={() => navigate(-1)}>
             Return Back
           </button>
         </div>

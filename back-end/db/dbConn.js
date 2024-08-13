@@ -174,11 +174,37 @@ dataPool.AdminMatch = (email) => {
     });
 };
 
+// CarMatch: Update car approval status to 1 based on car_id
+dataPool.CarMatch = (car_id) => {
+    return new Promise((resolve, reject) => {
+        const query = 'UPDATE cars SET car_approved = 1 WHERE car_id = ?';
+        conn.query(query, [car_id], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 // Delete user by email
 dataPool.deleteUser = (email) => {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM users WHERE email = ?';
         conn.query(query, [email], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+// Delete car by car_id
+dataPool.deleteCar = (car_id) => {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM cars WHERE car_id = ?';
+        conn.query(query, [car_id], (err, results) => {
             if (err) {
                 return reject(err);
             }

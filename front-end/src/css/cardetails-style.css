@@ -43,7 +43,7 @@
     margin-top: 20px;
 }
 
-.rent-button, .back-button {
+.rent-buttonCAR, .back-buttonCAR {
     margin-top: 10px;
     background-image: linear-gradient(to right, #02775a, #27db9f);
     color: #fff;
@@ -58,6 +58,6 @@
     margin-left: 10px;
 }
   
-.rent-button:hover, .back-button:hover {
+.rent-buttonCAR:hover, .back-buttonCAR:hover {
     background-image: linear-gradient(to right, #27db9f, #02775a);
 }
