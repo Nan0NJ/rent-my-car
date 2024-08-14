@@ -8,6 +8,7 @@ const useQuery = () => {
 
 const BookingPage = () => {
   const approval = localStorage.getItem('approvalStatus');
+  
   const query = useQuery();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,6 +17,7 @@ const BookingPage = () => {
     minPrice: 0,
     maxPrice: 50000,
     modelYear: '',
+    city: '',
   });
   const [showFilters, setShowFilters] = useState(false);
   const [cars, setCars] = useState([]); // All cars fetched from backend
@@ -39,22 +41,25 @@ const BookingPage = () => {
   }, []);
 
   const filterCars = useCallback(() => {
-
     const filteredCars = cars.filter((car) => {
-      const matchesCategory = !filters.category || car.car_category.trim().toLowerCase() === filters.category.trim().toLowerCase();
-      const matchesSearch = car.car_name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesYear = !filters.modelYear || car.model_year.toString() === filters.modelYear;
+        const matchesCategory = !filters.category || (car.car_category && car.car_category.trim().toLowerCase() === filters.category.trim().toLowerCase());
+        const matchesSearch = car.car_name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesYear = !filters.modelYear || (car.model_year && car.model_year.toString() === filters.modelYear);
+        const matchesPrice = car.car_price >= filters.minPrice && car.car_price <= filters.maxPrice;
+        const matchesCity = !filters.city || (car.car_location && car.car_location.toLowerCase().includes(filters.city.toLowerCase()));
 
-      return (
-        car.car_approved === 1 && // Only show approved cars
-        matchesCategory &&
-        matchesSearch &&
-        matchesYear
-      );
+        return (
+            car.car_approved === 1 && // Only show approved cars
+            matchesCategory &&
+            matchesSearch &&
+            matchesYear &&
+            matchesPrice &&
+            matchesCity
+        );
     });
 
     setFilteredCars(filteredCars);
-  }, [filters, searchTerm, cars]);
+}, [filters, searchTerm, cars]);
 
   useEffect(() => {
     filterCars(); 
@@ -89,9 +94,17 @@ const BookingPage = () => {
         <div className="search-bar">
           <input
             type="text"
-            placeholder="Search..."
+            placeholder="Search by car name..."
             value={searchTerm}
             onChange={handleSearchChange}
+            className="search-input"
+          />
+          <input
+            type="text"
+            placeholder="Search by city..."
+            value={filters.city}
+            name="city"
+            onChange={handleInputChange}
             className="search-input"
           />
           <button type="submit" className="search-icon-button">
@@ -175,7 +188,9 @@ const BookingPage = () => {
                     <div className="car-info">
                       <h3>{car.car_name}</h3>
                       <p>Category: {car.car_category}</p>
+                      <p>Model Year: {car.model_year}</p>
                       <p>Location: {car.car_location}</p>
+                      <p>Car Mileage: {car.car_mileage} km</p>
                       <p>Information: {car.car_information}</p>
                       <p>Price: {car.car_price} €</p>
                     </div>
@@ -186,7 +201,9 @@ const BookingPage = () => {
                     <div className="car-info">
                       <h3>{car.car_name}</h3>
                       <p>Category: {car.car_category}</p>
+                      <p>Model Year: {car.model_year}</p>
                       <p>Location: {car.car_location}</p>
+                      <p>Car Mileage: {car.car_mileage} km</p>
                       <p>Information: {car.car_information}</p>
                       <p>Price: {car.car_price} €</p>
                     </div>
