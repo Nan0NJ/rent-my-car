@@ -18,8 +18,8 @@ const BookingPage = () => {
     modelYear: '',
   });
   const [showFilters, setShowFilters] = useState(false);
-  const [cars, setCars] = useState([]);
-  const [filteredCars, setFilteredCars] = useState([]);
+  const [cars, setCars] = useState([]); // All cars fetched from backend
+  const [filteredCars, setFilteredCars] = useState([]); 
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -27,7 +27,7 @@ const BookingPage = () => {
         const response = await fetch('http://88.200.63.148:8228/cars/all');
         if (response.ok) {
           const data = await response.json();
-          setCars(data);
+          setCars(data); // Set the full list of cars
         } else {
           console.error('Failed to fetch cars');
         }
@@ -38,43 +38,49 @@ const BookingPage = () => {
     fetchCars();
   }, []);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
   const filterCars = useCallback(() => {
+
     const filteredCars = cars.filter((car) => {
+      const matchesCategory = !filters.category || car.car_category.trim().toLowerCase() === filters.category.trim().toLowerCase();
+      const matchesSearch = car.car_name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesYear = !filters.modelYear || car.model_year.toString() === filters.modelYear;
+
       return (
         car.car_approved === 1 && // Only show approved cars
-        car.car_name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (!filters.category || car.car_category === filters.category) &&
-        (!filters.modelYear || car.model_year.toString() === filters.modelYear)
+        matchesCategory &&
+        matchesSearch &&
+        matchesYear
       );
     });
+
     setFilteredCars(filteredCars);
   }, [filters, searchTerm, cars]);
 
   useEffect(() => {
-    filterCars();
+    filterCars(); 
   }, [filters, searchTerm, cars, filterCars]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    filterCars();
+    filterCars(); 
   };
 
-  const toggleFilters = () => {
-    setShowFilters(!showFilters);
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value); 
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFilters((prevFilters) => ({ ...prevFilters, [name]: value })); 
   };
 
   const handlePriceChange = (event) => {
     const { name, value } = event.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: Number(value) }));
+  };
+
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
   };
 
   return (
@@ -160,7 +166,7 @@ const BookingPage = () => {
       <div className="car-results">
         {filteredCars.length > 0 ? (
           filteredCars.map((car) => {
-            const carId = `${car.car_name}_${car.car_owner}`; // Create the car_id by concatenating car_name and car_owner
+            const carId = `${car.car_name}_${car.car_owner}`; // Created by the car_id by concatenating car_name and car_owner
             return (
               <div key={carId}>
                 {approval === '1' ? (
