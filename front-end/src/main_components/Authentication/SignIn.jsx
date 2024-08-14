@@ -80,6 +80,7 @@ const SignIn = ({ onSignInSuccess, onClose }) => {
       }
 
       signedInEmail = email;
+      localStorage.setItem('loggedEmail', signedInEmail);
       
       onSignInSuccess();
       onClose();
