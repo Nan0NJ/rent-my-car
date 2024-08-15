@@ -43,4 +43,36 @@ reviews.get('/', async (req, res) => {
     }
 });
 
+// Route to get all reviews
+reviews.get('/all', async (req, res) => {
+    try {
+        const comments = await DB.getAllComments();
+        res.status(200).json(comments);
+    } catch (err) {
+        console.error('Error fetching reviews:', err);
+        res.status(500).json({ error: 'Failed to fetch reviews' });
+    }
+});
+
+// Route to delete a review by its ID
+reviews.post('/delete', async (req, res) => {
+    const { review_id } = req.body;
+
+    if (!review_id) {
+        return res.status(400).json({ error: 'Review ID is required' });
+    }
+
+    try {
+        const result = await DB.deleteCommentById(review_id);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Comment deleted successfully' });
+        } else {
+            res.status(404).json({ error: 'Comment not found' });
+        }
+    } catch (err) {
+        console.error('Error deleting comment:', err);
+        res.status(500).json({ error: 'Failed to delete comment' });
+    }
+});
+
 module.exports = reviews;

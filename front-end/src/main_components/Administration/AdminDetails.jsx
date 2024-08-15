@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 // Importing files
 import ReviewBookings from "./ReviewBookings";
 import ReviewLicenses from "./ReviewLicenses";
+import ReviewComments from "./ReviewComments";
 import "../../css/admindetail-style.css";
 
 const AdminDetails = () => {
@@ -55,6 +56,13 @@ const AdminDetails = () => {
       >
         Review Bookings
       </button>
+      <button 
+        className="review-button" 
+        onClick={() => setView("comments")} 
+        disabled={!adminApproved} // Disables the button if admin is not approved
+      >
+        Review Comments
+      </button>
     </div>
   );
 
@@ -72,11 +80,19 @@ const AdminDetails = () => {
     </div>
   );
 
+  const renderComments = () => (
+    <div>
+      <button className="back-button" onClick={() => setView("main")}>Back</button>
+      <ReviewComments />
+    </div>
+  );
+
   return (
     <div className="text-details-auth">
       {view === "main" && renderMainButtons()}
       {view === "licenses" && renderUserLicenses()}
       {view === "bookings" && renderBookings()}
+      {view === "comments" && renderComments()}
     </div>
   );
 };
