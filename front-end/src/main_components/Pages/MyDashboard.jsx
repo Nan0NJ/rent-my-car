@@ -13,10 +13,8 @@ const Dashboard = () => {
     age: '',
   });
   const [publishedCars, setPublishedCars] = useState([]);
-  const [rentHistory, setRentHistory] = useState([]);
   const [cars, setCars] = useState([]);
   const [showPublishedCars, setShowPublishedCars] = useState(false);
-  const [showRentHistory, setShowRentHistory] = useState(false);
   const [showAddCar, setShowAddCar] = useState(false); // State to manage AddCar modal visibility
 
   useEffect(() => {
@@ -46,15 +44,6 @@ const Dashboard = () => {
         setPublishedCars(data);
       })
       .catch(error => console.error('Error fetching published cars:', error));
-
-    // Fetch all cars (if needed for the "Add Rented Car" functionality)
-    fetch('/api/all-cars')
-      .then(response => response.json())
-      .then(data => {
-        console.log('All cars data:', data); // Log the response data
-        setCars(data);
-      })
-      .catch(error => console.error('Error fetching all cars:', error));
   }, [storedEmail]);
 
   const handleAddCarSuccess = (newCar) => {
@@ -105,35 +94,6 @@ const Dashboard = () => {
                 ))
               ) : (
                 <p>No published cars</p>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="accordion-section">
-          <h2 onClick={() => setShowRentHistory(!showRentHistory)}>
-            Rent History 
-            <button className="accordion-toggle">
-              {showRentHistory ? '▲' : '▼'}
-            </button>
-          </h2>
-          {showRentHistory && (
-            <div className="accordion-content">
-              {rentHistory.length > 0 ? (
-                rentHistory.map(car => (
-                  <div key={car.id} className="car-item">
-                    <img src={car.image || ''} alt={car.name} className="car-img" />
-                    <div className="car-info">
-                      <h3>{car.name}</h3>
-                      <p>Category: {car.category}</p>
-                      <p>Price: {car.price} €</p>
-                      <p>Model Year: {car.modelYear}</p>
-                      <p>Status: {car.taken ? 'Taken' : 'Available'}</p>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <p>No rent history</p>
               )}
             </div>
           )}
