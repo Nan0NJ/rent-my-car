@@ -294,5 +294,35 @@ dataPool.UserPublished = (email) => {
     });
 };
 
+// Add a review to the database
+dataPool.addReview = (review) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            INSERT INTO reviews (car_id, user_email, user_fullname, review_text, review_date)
+            VALUES (?, ?, ?, ?, NOW())
+        `;
+        conn.query(query, [
+            review.car_id, review.user_email, review.user_fullname, review.review_text
+        ], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+// Get all reviews for a specific car
+dataPool.getReviewsByCarId = (car_id) => {
+    return new Promise((resolve, reject) => {
+        conn.query('SELECT * FROM reviews WHERE car_id = ? ORDER BY review_date DESC', [car_id], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 
 module.exports = dataPool;

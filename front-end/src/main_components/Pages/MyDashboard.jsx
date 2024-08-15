@@ -81,7 +81,6 @@ const Dashboard = () => {
               {publishedCars.length > 0 ? (
                 publishedCars.map(car => (
                   <div key={car.car_id} className="car-item">
-                    {/* Ensure the correct construction of the data URL for the image */}
                     <img src={`data:image/jpeg;base64,${car.car_img}`} alt={car.car_name} className="car-img" />
                     <div className="car-info">
                       <h3>{car.car_name}</h3>

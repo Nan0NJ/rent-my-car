@@ -27,7 +27,7 @@ const Serviced = () => {
       <div className="service-card">
         <h3 className="service-title">Free Support</h3>
         <p className="service-text">
-          Our dedicated support team is here to assist you at every step. From booking your car to managing your rental, addressing all concerns, we provide round-the-clock support to ensure a smooth and hassle-free experience.
+          Our dedicated support team is here to assist you at every step. From securing your car to managing your rental, addressing all concerns, we provide round-the-clock support to ensure a smooth and hassle-free experience.
         </p>
         <a href="/contact" className="service-link">
           Learn More <span>&rarr;</span>
