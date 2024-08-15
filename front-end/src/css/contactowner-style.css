@@ -1,0 +1,74 @@
+/* 
+    Contact Owner CSS
+*/
+@import url('https://fonts.googleapis.com/css2?family=Sansita+One&display=swap');
+:root {
+    --font-sansita-one: 'Sansita One', sans-serif;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contactOwner-h2 {
+    font-family: var(--font-sansita-one);
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.contactOwner-p {
+    font-size: 1rem;
+    color: #333;
+    font-style: italic;
+}
+
+.formLOGIN {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.close-buttonCONTACT {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    background-color: #02775a;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.email-display {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    display: inline-block;
+    width: 100%;
+    color: #333;
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './../../css/cardetails-style.css';
+import ContactOwner from './ContactOwner'; // Import the ContactOwner component
 
 const CarDetails = () => {
   const { id } = useParams(); 
@@ -9,6 +10,7 @@ const CarDetails = () => {
   const [reviews, setReviews] = useState([]); 
   const [reviewText, setReviewText] = useState(''); 
   const [error, setError] = useState('');
+  const [showContactPopup, setShowContactPopup] = useState(false); // State to manage the contact pop-up visibility
 
   useEffect(() => {
     const fetchCarDetails = async () => {
@@ -99,7 +101,12 @@ const CarDetails = () => {
         <p className="car-detail-text">Additional Information: {car.car_information}</p>
         
         <div className="button-container">
-          <button className="rent-buttonCAR">Rent Now</button>
+          <button 
+            className="rent-buttonCAR"
+            onClick={() => setShowContactPopup(true)} // Open the contact pop-up
+          >
+            Rent Now
+          </button>
           <button className="back-buttonCAR" onClick={() => navigate(-1)}>
             Return Back
           </button>
@@ -130,6 +137,13 @@ const CarDetails = () => {
           )}
         </div>
       </div>
+
+      {showContactPopup && (
+        <ContactOwner
+          ownerEmail={car.car_owner} // Pass the owner's email to the ContactOwner component
+          onClose={() => setShowContactPopup(false)} // Close the pop-up when the close button is clicked
+        />
+      )}
     </div>
   );
 };

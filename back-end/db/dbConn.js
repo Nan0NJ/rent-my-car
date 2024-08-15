@@ -324,7 +324,7 @@ dataPool.getReviewsByCarId = (car_id) => {
     });
 };
 
-// Function to get all comments
+// Get all comments
 dataPool.getAllComments = () => {
     return new Promise((resolve, reject) => {
         const query = 'SELECT r.*, u.fullname as user_fullname FROM reviews r JOIN users u ON r.user_email = u.email';
@@ -337,8 +337,7 @@ dataPool.getAllComments = () => {
     });
 };
 
-// Function to delete a comment by its ID
-// Function to delete a comment by its review_id
+// Delete a comment by its ID
 dataPool.deleteCommentById = (review_id) => {
     return new Promise((resolve, reject) => {
         const query = 'DELETE FROM reviews WHERE review_id = ?';
