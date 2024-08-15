@@ -276,4 +276,23 @@ dataPool.getCarPriceByName = (carName) => {
     });
 };
 
+// Get all cars information for a specific user
+dataPool.UserPublished = (email) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT * FROM cars WHERE car_owner = ?';
+        conn.query(query, [email], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            // Convert car_img BLOB to Base64 string
+            const cars = results.map(car => ({
+                ...car,
+                car_img: car.car_img ? Buffer.from(car.car_img).toString('base64') : null
+            }));
+            return resolve(cars);
+        });
+    });
+};
+
+
 module.exports = dataPool;

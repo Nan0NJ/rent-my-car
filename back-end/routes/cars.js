@@ -95,6 +95,23 @@ cars.post('/matchcar', async (req, res) => {
     }
 });
 
+// Get all cars published by the user
+cars.get('/published-cars', async (req, res) => {
+    const email = req.query.email;
+
+    if (!email) {
+        return res.status(400).json({ error: 'Email is required' });
+    }
+
+    try {
+        const cars = await DB.UserPublished(email);
+        res.status(200).json(cars);
+    } catch (error) {
+        console.error('Error fetching published cars:', error);
+        res.status(500).json({ error: 'Failed to fetch published cars' });
+    }
+});
+
 // Delete car by car_id
 cars.post('/deletecar', async (req, res) => {
     const { car_id } = req.body;
