@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './../../css/mydashboard-style.css';
-import AddCar from './AddCar'; // Import the AddCar component
-import './../../css/addcar-style.css'; // Import the new CSS file
+import AddCar from './AddCar';
+import './../../css/addcar-style.css';
 
 const Dashboard = () => {
   const storedEmail = localStorage.getItem('loggedEmail');
@@ -13,9 +13,10 @@ const Dashboard = () => {
     age: '',
   });
   const [publishedCars, setPublishedCars] = useState([]);
-  const [cars, setCars] = useState([]);
   const [showPublishedCars, setShowPublishedCars] = useState(false);
-  const [showAddCar, setShowAddCar] = useState(false); // State to manage AddCar modal visibility
+  const [showAddCar, setShowAddCar] = useState(false);
+  const [showRemovePopup, setShowRemovePopup] = useState(false);
+  const [carToRemove, setCarToRemove] = useState(null);
 
   useEffect(() => {
     if (!storedEmail) return;
@@ -24,7 +25,6 @@ const Dashboard = () => {
     fetch(`http://88.200.63.148:8228/users/userdetails?email=${storedEmail}`)
       .then(response => response.json())
       .then(data => {
-        console.log('User details data:', data); // Log the response data
         if (data && data.length > 0) {
           setUser(u => ({
             ...u,
@@ -40,15 +40,48 @@ const Dashboard = () => {
     fetch(`http://88.200.63.148:8228/cars/published-cars?email=${storedEmail}`)
       .then(response => response.json())
       .then(data => {
-        console.log('Published cars data:', data); // Log the response data
         setPublishedCars(data);
       })
       .catch(error => console.error('Error fetching published cars:', error));
   }, [storedEmail]);
 
   const handleAddCarSuccess = (newCar) => {
-    setCars([...cars, newCar]);
     setPublishedCars([...publishedCars, newCar]);
+  };
+
+  const handleRemoveCarAndReviews = async () => {
+    if (!carToRemove) return;
+
+    // Close the pop-up immediately
+    setShowRemovePopup(false);
+
+    try {
+      // Remove the car and associated reviews
+      const carResponse = await fetch('http://88.200.63.148:8228/cars/deletecar', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ car_id: carToRemove.car_id }),
+      });
+
+      const reviewResponse = await fetch('http://88.200.63.148:8228/reviews/delete-by-car', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ car_id: carToRemove.car_id }),
+      });
+
+      if (carResponse.ok && reviewResponse.ok) {
+        // Update the state to remove the car from the list
+        setPublishedCars(publishedCars.filter(car => car.car_id !== carToRemove.car_id));
+      } else {
+        console.error('Failed to remove car or reviews');
+      }
+    } catch (error) {
+      console.error('Error removing car and reviews:', error);
+    }
   };
 
   if (approvalStatus === '0' || approvalStatus === null) {
@@ -88,6 +121,17 @@ const Dashboard = () => {
                       <p>Price: {car.car_price} €</p>
                       <p>Model Year: {car.model_year}</p>
                       <p>Status: {car.car_approved === 1 ? 'Approved' : 'Pending Approval'}</p>
+                      {car.car_approved === 1 && (
+                        <button
+                          className="remove-car-button"
+                          onClick={() => {
+                            setCarToRemove(car);
+                            setShowRemovePopup(true);
+                          }}
+                        >
+                          Remove Car
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))
@@ -110,6 +154,16 @@ const Dashboard = () => {
             <div className="formADD">
               <button className="close-button" onClick={() => setShowAddCar(false)}>✖</button>
               <AddCar onAddCarSuccess={handleAddCarSuccess} onClose={() => setShowAddCar(false)} />
+            </div>
+          </div>
+        )}
+
+        {showRemovePopup && (
+          <div className="modal">
+            <div className="formREMOVE">
+              <p>Are you sure you want to remove {carToRemove?.car_name} and all associated reviews?</p>
+              <button onClick={handleRemoveCarAndReviews} className="confirm-remove-button">Yes, Remove</button>
+              <button onClick={() => setShowRemovePopup(false)} className="cancel-remove-button">Cancel</button>
             </div>
           </div>
         )}

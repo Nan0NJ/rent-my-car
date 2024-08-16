@@ -75,4 +75,23 @@ reviews.post('/delete', async (req, res) => {
     }
 });
 
+// Route to delete all reviews by car_id
+reviews.post('/delete-by-car', async (req, res) => {
+    const { car_id } = req.body;
+
+    if (!car_id) {
+        return res.status(400).json({ error: 'Car ID is required' });
+    }
+
+    try {
+        const result = await DB.deleteReviewsByCarId(car_id);
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Reviews deleted successfully' });
+        }
+    } catch (err) {
+        console.error('Error deleting reviews:', err);
+        res.status(500).json({ error: 'Failed to delete reviews' });
+    }
+});
+
 module.exports = reviews;

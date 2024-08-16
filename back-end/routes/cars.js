@@ -124,8 +124,6 @@ cars.post('/deletecar', async (req, res) => {
         const result = await DB.deleteCar(car_id);
         if (result.affectedRows > 0) {
             res.status(200).json({ message: 'Car deleted successfully' });
-        } else {
-            res.status(404).json({ error: 'Car not found' });
         }
     } catch (err) {
         console.error(err);

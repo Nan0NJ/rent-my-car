@@ -350,4 +350,17 @@ dataPool.deleteCommentById = (review_id) => {
     });
 };
 
+// Delete all comments for a specific car
+dataPool.deleteReviewsByCarId = (car_id) => {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM reviews WHERE car_id = ?';
+        conn.query(query, [car_id], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 module.exports = dataPool;

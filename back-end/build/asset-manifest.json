@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bac9c2c2.css",
+    "main.js": "/static/js/main.9bf909d4.js",
+    "static/media/Vroom.png": "/static/media/Vroom.e347e8e65240babafe8a.png",
+    "static/media/image1.png": "/static/media/image1.2e194f3b3cb61cf3b34b.png",
+    "static/media/image2.png": "/static/media/image2.125862114cc2b0c4aa1f.png",
+    "static/media/Banner.png": "/static/media/Banner.f47c83fcd9e0dc8dd66a.png",
+    "static/media/footer_car.png": "/static/media/footer_car.60789faa59edf9929f20.png",
+    "static/media/logo.png": "/static/media/logo.276f952a9cfa6d2d8e94.png",
+    "static/media/phone.png": "/static/media/phone.69b621fbe638c1928efe.png",
+    "static/media/shape.png": "/static/media/shape.27500d737ebcd86ae1f1.png",
+    "static/media/location.png": "/static/media/location.528ab0f41ea97a1be24a.png",
+    "index.html": "/index.html",
+    "main.bac9c2c2.css.map": "/static/css/main.bac9c2c2.css.map",
+    "main.9bf909d4.js.map": "/static/js/main.9bf909d4.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bac9c2c2.css",
+    "static/js/main.9bf909d4.js"
+  ]
+}

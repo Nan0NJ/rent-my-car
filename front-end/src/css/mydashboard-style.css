@@ -78,6 +78,65 @@
 
 .car-info {
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Button for removing a car */
+.remove-car-button {
+  align-self: flex-start; /* Align the button to the top-right */
+  background-image: linear-gradient(to right, #e74c3c, #c0392b);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.remove-car-button:hover {
+  background-image: linear-gradient(to right, #c0392b, #e74c3c);
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); 
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formREMOVE {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.confirm-remove-button, .cancel-remove-button {
+  background-image: linear-gradient(to right, #02775a, #27db9f);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-remove-button:hover, .cancel-remove-button:hover {
+  background-image: linear-gradient(to right, #27db9f, #02775a);
 }
 
 /* Unique styles for "Add Rented Car" section */
