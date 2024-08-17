@@ -49,39 +49,57 @@ const Dashboard = () => {
     setPublishedCars([...publishedCars, newCar]);
   };
 
-  const handleRemoveCarAndReviews = async () => {
+  const handleRemoveReviews = async () => {
     if (!carToRemove) return;
 
-    // Close the pop-up immediately
-    setShowRemovePopup(false);
+    try {
+        const reviewResponse = await fetch('http://88.200.63.148:8228/reviews/delete-by-car', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ car_id: carToRemove.car_id }),
+        });
+
+        if (!reviewResponse.ok) {
+            console.error('Failed to remove reviews');
+        }
+    } catch (error) {
+        console.error('Error removing reviews:', error);
+    }
+  };
+
+  const handleRemoveCar = async () => {
+    if (!carToRemove) return;
 
     try {
-      // Remove the car and associated reviews
-      const carResponse = await fetch('http://88.200.63.148:8228/cars/deletecar', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ car_id: carToRemove.car_id }),
-      });
+        const carResponse = await fetch('http://88.200.63.148:8228/cars/deletecar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ car_id: carToRemove.car_id }),
+        });
 
-      const reviewResponse = await fetch('http://88.200.63.148:8228/reviews/delete-by-car', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ car_id: carToRemove.car_id }),
-      });
+        if (carResponse.ok) {
+            // Close the pop-up immediately
+            setShowRemovePopup(false);
 
-      if (carResponse.ok && reviewResponse.ok) {
-        // Update the state to remove the car from the list
-        setPublishedCars(publishedCars.filter(car => car.car_id !== carToRemove.car_id));
-      } else {
-        console.error('Failed to remove car or reviews');
-      }
+            // Refresh the page after a brief delay to allow the modal to close smoothly
+            setTimeout(() => {
+                window.location.reload();
+            }, 300);
+        } else {
+            console.error('Failed to remove car');
+        }
     } catch (error) {
-      console.error('Error removing car and reviews:', error);
+        console.error('Error removing car:', error);
     }
+  };
+
+  const handleRemoveCarAndReviews = async () => {
+    //await handleRemoveReviews();
+    await handleRemoveCar();
   };
 
   if (approvalStatus === '0' || approvalStatus === null) {

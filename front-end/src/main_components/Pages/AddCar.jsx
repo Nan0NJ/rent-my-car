@@ -87,7 +87,7 @@ const AddCar = ({ onAddCarSuccess, onClose }) => {
 
   useEffect(() => {
     const updateSuggestedPrice = async () => {
-      if (category && modelYear && mileagePassed !== '' && isDamaged !== '' && carName) {
+      if (category && modelYear && mileagePassed !== '' && carName) {
         const suggested = await calculateDailyRate(category, parseInt(modelYear), parseInt(mileagePassed), isDamaged, carName);
         setSuggestedPrice(suggested);
       }
