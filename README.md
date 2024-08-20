@@ -26,7 +26,7 @@ git clone https://github.com/Nan0NJ/rent-my-car.git
 cd rent-my-car
 ```
 2. Install Dependencies:
-Navigate to the project directory and run the following command to install all necessary dependencies:
+Navigate to the project directory and run the following command to install all necessary dependencies (in front-end and back-end if needed):
 ```bash
 npm install
 ```
@@ -44,3 +44,25 @@ DB_PASSWORD=codeigniter2019
 DB_NAME=SISIII2024_89221061
 PORT=8228
 ```
+4. Create the build file in the front-end and move it to the back-end:
+``` bash
+npm run build
+```
+5. Run the Server Back-end server: (got to the /back-end path):
+``` bash
+node index.js
+```
+The server will be running on http://localhost:8228.
+
+Access the Application:
+Open your web browser and navigate to the application URL:
+http://88.200.63.148:8228.
+
+Additional Information:
+Front-End Development: The front-end is built using React.js. Ensure all the front-end dependencies are also installed by navigating to the client directory and running npm install.
+
+Back-End Development: The back-end is developed using Node.js with the Express.js framework. It handles the server-side logic, routing, and API endpoints.
+
+Database Management: The application uses MySQL, managed via phpMyAdmin. Ensure the database is correctly set up and accessible.
+
+For more detailed information about the implementation and functionalities, please refer to the project documentation and report.
