@@ -141,7 +141,7 @@ dataPool.getUnapprovedCars = () => {
 
 dataPool.getUserDetails = (email) => {
     return new Promise((resolve, reject) => {
-        conn.query('SELECT email, fullname, age, cars_for_rent, rented_cars, image FROM users WHERE email = ?', [email], (err, results) => {
+        conn.query('SELECT email, fullname, age, image FROM users WHERE email = ?', [email], (err, results) => {
             if (err) {
                 return reject(err);
             }
