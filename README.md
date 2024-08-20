@@ -24,3 +24,23 @@ Before running the project, ensure you have the following installed:
 ```bash
 git clone https://github.com/Nan0NJ/rent-my-car.git
 cd rent-my-car
+```
+2. Install Dependencies:
+Navigate to the project directory and run the following command to install all necessary dependencies:
+```bash
+npm install
+```
+3. Set Up the Database:
+Access the MySQL database and create a new database using the following command:
+``` sql
+CREATE DATABASE SISIII2024_89221061;
+```
+Import the provided SQL file to set up the necessary tables and data.
+Update the `.env` file with your MySQL credentials:
+``` 
+DB_HOST=your_database_host
+DB_USER=codeigniter
+DB_PASSWORD=codeigniter2019
+DB_NAME=SISIII2024_89221061
+PORT=8228
+```
